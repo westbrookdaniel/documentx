@@ -33,7 +33,7 @@ declare global {
     }
 
     interface IntrinsicAttributes {
-      [elemName: string]: any
+      [elemName: string]: any & { ref?: (el: Element) => void }
     }
   }
 }

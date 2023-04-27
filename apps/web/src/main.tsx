@@ -16,10 +16,10 @@ const App = () => {
     { id: 3, title: 'Task 3', done: false },
   ]
 
+  let tasksEl: Element | null = null
+
   const renderTasks = () => {
-    const el = document.querySelector('#task-container')
-    if (!el) throw new Error('Element not found')
-    render(el, <Tasks tasks={tasks} onCheck={onCheck} />)
+    if (tasksEl) render(tasksEl, <Tasks tasks={tasks} onCheck={onCheck} />)
   }
 
   const onCheck = (task: Task) => {
@@ -49,7 +49,7 @@ const App = () => {
           <input type="text" name="new-todo" placeholder="Whats new?" />
           <button>Add</button>
         </form>
-        <div id="task-container">
+        <div ref={(el: Element) => (tasksEl = el)}>
           <Tasks tasks={tasks} onCheck={onCheck} />
         </div>
       </div>

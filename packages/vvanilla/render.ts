@@ -5,20 +5,20 @@ import type { Child, Children, VNode } from '.'
  */
 export function render(
   parentElement: Element | undefined | null,
-  node: VNode
+  vnode: VNode
 ): Element {
   // If it's a component call it's render function
-  if (typeof node.type === 'function') {
-    return render(parentElement, node.type(node.props))
+  if (typeof vnode.type === 'function') {
+    return render(parentElement, vnode.type(vnode.props))
   }
 
   // TODO: Add optimisation around reusing dom elements
-  const el: Element = document.createElement(node.type)
+  const el: Element = document.createElement(vnode.type)
   parentElement?.replaceChildren(el)
 
-  applyAttributes(node, el)
+  applyAttributes(vnode, el)
 
-  const children = node.props.children
+  const children = vnode.props.children
   const newChildren: (Element | Text)[] = []
   if (children) {
     traverse(children, {
@@ -50,7 +50,7 @@ const listenersInUse = new WeakMap<
 /**
  * Applies attributes of a node to a dom element
  */
-function applyAttributes(node: VNode, el: Element) {
+function applyAttributes(vnode: VNode, el: Element) {
   // Remove old listeners
   if (listenersInUse.has(el)) {
     const oldListeners = listenersInUse.get(el)!
@@ -63,8 +63,10 @@ function applyAttributes(node: VNode, el: Element) {
 
   // Apply attributes
   // Any code that modifies the dom will be run too
-  Object.entries(node.props).forEach(([key, value]) => {
+  Object.entries(vnode.props).forEach(([key, value]) => {
     if (key === 'children') return
+    // We want to apply ref at the end
+    if (key === 'ref') return
     if (value === undefined) return
     if (key.startsWith('on') && typeof value === 'function') {
       const eventType = key.slice(2).toLowerCase()
@@ -85,8 +87,14 @@ function applyAttributes(node: VNode, el: Element) {
     // TODO: Fix this cast
     el.setAttribute(key, value as any)
   })
+
+  // Apply ref
+  if (vnode.props.ref) vnode.props.ref(el)
 }
 
+/**
+ * Traverses children of a node
+ */
 function traverse(
   children: Children,
   handlers: {
