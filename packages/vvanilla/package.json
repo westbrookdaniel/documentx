@@ -1,8 +1,10 @@
 {
   "name": "vvanilla",
   "version": "0.0.0",
-  "main": "./index.tsx",
-  "types": "./index.tsx",
+  "exports": {
+    ".": "./index.ts",
+    "./jsx-runtime": "./jsx-runtime.ts"
+  },
   "license": "MIT",
   "scripts": {
     "lint": "eslint \"**/*.ts*\""

@@ -8,6 +8,7 @@
     "incremental": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "jsxImportSource": "vvanilla",
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "ESNext",
     "target": "es6"
