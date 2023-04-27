@@ -4,7 +4,8 @@
   "exports": {
     ".": "./index.ts",
     "./jsx-runtime": "./jsx-runtime.ts",
-    "./jsx-dev-runtime": "./jsx-dev-runtime.ts"
+    "./jsx-dev-runtime": "./jsx-dev-runtime.ts",
+    "./dom": "./dom/index.ts"
   },
   "license": "MIT",
   "scripts": {

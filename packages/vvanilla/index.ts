@@ -1,5 +1,3 @@
-export const VERSION = '1.0.0'
-
 export type VNode = {
   type: any
   props: any & { children: Children[] }

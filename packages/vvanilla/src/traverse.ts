@@ -1,4 +1,4 @@
-import type { Child, Children, VNode } from '.'
+import type { Child, Children, VNode } from '..'
 
 export function traverse(
   children: Children,
