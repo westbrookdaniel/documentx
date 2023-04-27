@@ -1,4 +1,7 @@
 function jsx(type: any, props: any) {
+  if (typeof type === 'function') {
+    return { type, props }
+  }
   return { type, props }
 }
 

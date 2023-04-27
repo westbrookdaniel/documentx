@@ -1,11 +1,26 @@
 export const VERSION = '1.0.0'
 
+export type VNode = {
+  type: any
+  props: any & { children: Children[] }
+}
+
+export type Children = Child | Child[]
+
+export type Child =
+  | VNode[]
+  | VNode
+  | object
+  | string
+  | number
+  | bigint
+  | boolean
+  | null
+  | undefined
+
 declare global {
   namespace JSX {
-    interface Element {
-      type: any
-      props: any
-    }
+    interface Element extends VNode {}
 
     interface IntrinsicElements {
       [elemName: string]: any
