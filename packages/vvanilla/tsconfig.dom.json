@@ -3,6 +3,6 @@
   "compilerOptions": {
     "lib": ["ES2020", "DOM", "DOM.Iterable"]
   },
-  "include": ["."],
+  "include": ["render.ts"],
   "exclude": ["dist", "build", "node_modules"]
 }

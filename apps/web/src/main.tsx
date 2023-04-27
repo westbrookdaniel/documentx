@@ -1,5 +1,6 @@
 import './index.css'
-import { render } from 'vvanilla/dom'
+import { render } from 'vvanilla'
+import { withFormData } from 'vvanilla-util'
 
 type Task = {
   id: number
@@ -38,14 +39,12 @@ const App = () => {
       <div class="mt-3 flex flex-col gap-6">
         <form
           class="flex gap-2 items-center max-w-sm"
-          onSubmit={(e: Event) => {
-            e.preventDefault()
-            const form = e.target as HTMLFormElement
-            const formData = new FormData(form)
-            const title = formData.get('new-todo') as string
+          onSubmit={withFormData((data: { 'new-todo': string }, form) => {
+            const title = data['new-todo']
+            if (title.length === 0) return
             addTask(title)
             form.reset()
-          }}
+          })}
         >
           <input type="text" name="new-todo" placeholder="Whats new?" />
           <button>Add</button>

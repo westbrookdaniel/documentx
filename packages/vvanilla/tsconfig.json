@@ -2,5 +2,5 @@
   "extends": "tsconfig/library.json",
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"],
-  "references": [{ "path": "./src/dom" }]
+  "references": [{ "path": "./tsconfig.dom.json" }]
 }
