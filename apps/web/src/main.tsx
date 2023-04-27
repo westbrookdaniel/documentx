@@ -15,19 +15,21 @@ const App = () => {
     { id: 3, title: 'Task 3', done: false },
   ]
 
-  const onCheck = (task: Task) => {
-    task.done = !task.done
+  const renderTasks = () => {
     const el = document.querySelector('#task-container')
     if (!el) throw new Error('Element not found')
     render(el, <Tasks tasks={tasks} onCheck={onCheck} />)
   }
 
+  const onCheck = (task: Task) => {
+    task.done = !task.done
+    renderTasks()
+  }
+
   const addTask = (title: string) => {
     if (title.length === 0) return
     tasks.unshift({ id: id++, title, done: false })
-    const el = document.querySelector('#task-container')
-    if (!el) throw new Error('Element not found')
-    render(el, <Tasks tasks={tasks} onCheck={onCheck} />)
+    renderTasks()
   }
 
   return (
