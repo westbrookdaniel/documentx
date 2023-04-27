@@ -19,7 +19,8 @@ const App = () => {
   let tasksEl: Element | null = null
 
   const renderTasks = () => {
-    if (tasksEl) render(tasksEl, <Tasks tasks={tasks} onCheck={onCheck} />)
+    if (!tasksEl) return
+    tasksEl.replaceChildren(render(<Tasks tasks={tasks} onCheck={onCheck} />))
   }
 
   const onCheck = (task: Task) => {
@@ -84,4 +85,5 @@ const Tasks = ({
   )
 }
 
-render(document.querySelector<HTMLDivElement>('#app')!, <App />)
+const app = document.querySelector<HTMLDivElement>('#app')!
+app.replaceChildren(render(<App />))

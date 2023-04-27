@@ -3,37 +3,27 @@ import type { Child, Children, VNode } from '.'
 /**
  * Creates dom element from a node
  */
-export function render(
-  parentElement: Element | undefined | null,
-  vnode: VNode
-): Element {
-  // If it's a component call it's render function
+export function render(vnode: VNode): Element {
   if (typeof vnode.type === 'function') {
-    return render(parentElement, vnode.type(vnode.props))
+    return render(vnode.type(vnode.props))
   }
 
-  // TODO: Add optimisation around reusing dom elements
   const el: Element = document.createElement(vnode.type)
-  parentElement?.replaceChildren(el)
-
-  applyAttributes(vnode, el)
 
   const children = vnode.props.children
-  const newChildren: (Element | Text)[] = []
   if (children) {
-    traverse(children, {
-      vnode: (child, i) => {
-        newChildren.push(
-          render(parentElement?.children[i ?? 0] as Element, child)
-        )
+    mapTypes(children, {
+      vnode: (child) => {
+        el.appendChild(render(child))
       },
       catch: (child) => {
         if (child === undefined || child === null) return
-        newChildren.push(document.createTextNode(child.toString()))
+        el.appendChild(document.createTextNode(child.toString()))
       },
     })
   }
-  el.replaceChildren(...newChildren)
+
+  applyAttributes(vnode, el)
 
   return el
 }
@@ -93,22 +83,22 @@ function applyAttributes(vnode: VNode, el: Element) {
 }
 
 /**
- * Traverses children of a node
+ * Maps over the children of a node
  */
-function traverse(
+function mapTypes(
   children: Children,
   handlers: {
-    vnode?: (child: VNode, i?: number) => void
-    catch?: (child: Exclude<Child, VNode>, i?: number) => void
+    vnode?: (child: VNode) => void
+    catch?: (child: Exclude<Child, VNode>) => void
   }
 ) {
   if (Array.isArray(children)) {
-    children.flat().forEach((child, i) => {
+    children.flat().forEach((child) => {
       // TODO: Use symbol to check if it's a vnode
       if (typeof child === 'object') {
-        handlers.vnode?.(child as unknown as VNode, i)
+        handlers.vnode?.(child as unknown as VNode)
       } else {
-        handlers.catch?.(child, i)
+        handlers.catch?.(child)
       }
     })
   } else if (typeof children === 'object') {
