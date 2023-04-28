@@ -1,5 +1,5 @@
-import type { VNode } from 'vvanilla'
-import { render } from 'vvanilla'
+import type { VNode } from 'framework'
+import { render } from 'framework'
 
 export type BasicMeta = {
   title?: string
@@ -11,7 +11,7 @@ export function setMeta(meta: VNode[]) {
   const head = document.querySelector('head')
   if (!head) return
   meta.forEach((node) => {
-    const el = render(null, node)
+    const el = render(node)
     const existing =
       el.nodeName === 'TITLE'
         ? head.querySelector('title')

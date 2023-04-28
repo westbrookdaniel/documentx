@@ -1,11 +1,7 @@
 {
-  "name": "vvanilla",
+  "name": "utils",
   "version": "0.0.0",
-  "exports": {
-    ".": "./index.ts",
-    "./jsx-runtime": "./jsx-runtime.ts",
-    "./jsx-dev-runtime": "./jsx-dev-runtime.ts"
-  },
+  "main": "./index.ts",
   "license": "MIT",
   "scripts": {
     "lint": "eslint \"**/*.ts*\""
@@ -14,6 +10,7 @@
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
+    "framework": "workspace:*",
     "typescript": "^4.5.2"
   }
 }

@@ -21,13 +21,13 @@ importers:
       autoprefixer: ^10.4.14
       eslint: ^7.32.0
       eslint-config-custom: workspace:*
+      framework: workspace:*
       postcss: ^8.4.23
       tailwindcss: ^3.3.2
       tsconfig: workspace:*
       typescript: ^5.0.2
+      utils: workspace:*
       vite: ^4.3.2
-      vvanilla: workspace:*
-      vvanilla-util: workspace:*
     dependencies:
       '@tailwindcss/forms': 0.5.3_tailwindcss@3.3.2
       '@tailwindcss/typography': 0.5.9_tailwindcss@3.3.2
@@ -35,13 +35,13 @@ importers:
       autoprefixer: 10.4.14_postcss@8.4.23
       eslint: 7.32.0
       eslint-config-custom: link:../../packages/eslint-config-custom
+      framework: link:../../packages/framework
       postcss: 8.4.23
       tailwindcss: 3.3.2
       tsconfig: link:../../packages/tsconfig
       typescript: 5.0.4
+      utils: link:../../packages/utils
       vite: 4.3.3
-      vvanilla: link:../../packages/vvanilla
-      vvanilla-util: link:../../packages/vvanilla-util
 
   packages/eslint-config-custom:
     specifiers:
@@ -51,34 +51,34 @@ importers:
       eslint-config-prettier: 8.5.0_eslint@7.32.0
       eslint-config-turbo: 1.9.3_eslint@7.32.0
 
+  packages/framework:
+    specifiers:
+      eslint: ^7.32.0
+      eslint-config-custom: workspace:*
+      tsconfig: workspace:*
+      typescript: ^4.5.2
+    devDependencies:
+      eslint: 7.32.0
+      eslint-config-custom: link:../eslint-config-custom
+      tsconfig: link:../tsconfig
+      typescript: 4.9.3
+
   packages/tsconfig:
     specifiers: {}
 
-  packages/vvanilla:
+  packages/utils:
     specifiers:
       eslint: ^7.32.0
       eslint-config-custom: workspace:*
+      framework: workspace:*
       tsconfig: workspace:*
       typescript: ^4.5.2
     devDependencies:
       eslint: 7.32.0
       eslint-config-custom: link:../eslint-config-custom
+      framework: link:../framework
       tsconfig: link:../tsconfig
       typescript: 4.9.3
-
-  packages/vvanilla-util:
-    specifiers:
-      eslint: ^7.32.0
-      eslint-config-custom: workspace:*
-      tsconfig: workspace:*
-      typescript: ^4.5.2
-      vvanilla: workspace:*
-    devDependencies:
-      eslint: 7.32.0
-      eslint-config-custom: link:../eslint-config-custom
-      tsconfig: link:../tsconfig
-      typescript: 4.9.3
-      vvanilla: link:../vvanilla
 
 packages:
 
