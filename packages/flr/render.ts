@@ -30,7 +30,6 @@ export function render(vnode: VNode): HTMLElement {
 
 /**
  * Map of elements to their event listeners
- * TODO: Add some manual cleanup for listeners when the element is removed?
  */
 const listenersInUse = new WeakMap<
     HTMLElement,
@@ -52,16 +51,28 @@ function applyAttributes(vnode: VNode, el: HTMLElement) {
     }
 
     // Apply attributes
-    // Any code that modifies the dom will be run too
     Object.entries(vnode.props).forEach(([key, value]) => {
         if (key === 'children') return
-        // We want to apply ref at the end
+        // We want to call ref at the end
         if (key === 'ref') return
         if (value === undefined) return
+        if (value === 'dangerouslySetInnerHTML') {
+            el.innerHTML = value.__html as string
+            return
+        }
+        if (key === 'style' && typeof value === 'object') {
+            Object.entries(value).forEach(([styleKey, styleValue]) => {
+                el.style[styleKey as any] =
+                    typeof styleValue === 'number'
+                        ? `${styleValue}px`
+                        : styleValue === null
+                        ? ''
+                        : (styleValue as any)
+            })
+            return
+        }
         if (key.startsWith('on') && typeof value === 'function') {
             const eventType = key.slice(2).toLowerCase()
-
-            // TODO: Type props so we don't need this cast
             const event = value as unknown as EventListener
 
             el.addEventListener(eventType, event)
@@ -74,11 +85,15 @@ function applyAttributes(vnode: VNode, el: HTMLElement) {
             }
             return
         }
-        // TODO: Fix this cast
-        el.setAttribute(key, value as any)
+        // Generic set attribute
+        if (value !== null && value !== false) {
+            el.setAttribute(key, value)
+        } else {
+            el.removeAttribute(key)
+        }
     })
 
-    // Apply ref
+    // Call ref
     if (vnode.props.ref) vnode.props.ref(el)
 }
 
@@ -94,17 +109,21 @@ function mapTypes(
 ) {
     if (Array.isArray(children)) {
         children.flat().forEach((child) => {
-            // TODO: Use symbol to check if it's a vnode
-            if (typeof child === 'object') {
+            if (isVNode(child)) {
                 handlers.vnode?.(child as unknown as VNode)
             } else {
                 handlers.catch?.(child)
             }
         })
-    } else if (typeof children === 'object') {
-        // TODO: Use symbol to check if it's a vnode
+    } else if (isVNode(children)) {
         handlers.vnode?.(children as unknown as VNode)
     } else {
         handlers.catch?.(children)
     }
+}
+
+function isVNode(child: any): child is VNode {
+    return (
+        typeof child === 'object' && child !== null && child.type !== undefined
+    )
 }

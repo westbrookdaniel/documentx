@@ -27,30 +27,29 @@ export type ComponentType<P = {}> = (props: P) => JSX.Element
 export interface FlrDOMAttributes {
     children?: Children
     ref?: (el: HTMLElement) => void
-    // TODO: Make dom safe again
-    // dangerouslySetInnerHTML?: {
-    //   __html: string
-    // }
+    dangerouslySetInnerHTML?: {
+        __html: string
+    }
 }
 
 declare global {
     namespace JSX {
-        // TODO: Add this
-        // export type DOMCSSProperties = {
-        //   [key in keyof Omit<
-        //     CSSStyleDeclaration,
-        //     | 'item'
-        //     | 'setProperty'
-        //     | 'removeProperty'
-        //     | 'getPropertyValue'
-        //     | 'getPropertyPriority'
-        //   >]?: string | number | null | undefined
-        // }
-        // export type AllCSSProperties = {
-        //   [key: string]: string | number | null | undefined
-        // }
-        // export interface CSSProperties extends AllCSSProperties, DOMCSSProperties {}
-        export type CSSProperties = string
+        export type DOMCSSProperties = {
+            [key in keyof Omit<
+                CSSStyleDeclaration,
+                | 'item'
+                | 'setProperty'
+                | 'removeProperty'
+                | 'getPropertyValue'
+                | 'getPropertyPriority'
+            >]?: string | number | null | undefined
+        }
+        export type AllCSSProperties = {
+            [key: string]: string | number | null | undefined
+        }
+        export interface CSSProperties
+            extends AllCSSProperties,
+                DOMCSSProperties {}
 
         export type Booleanish = boolean | 'true' | 'false'
 
