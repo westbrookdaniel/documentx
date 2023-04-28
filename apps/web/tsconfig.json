@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig-jolt/app.json",
+  "extends": "tsconfig-flr/app.json",
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"]
 }

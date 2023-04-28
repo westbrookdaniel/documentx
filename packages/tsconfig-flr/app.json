@@ -8,7 +8,7 @@
     "incremental": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "jolt",
+    "jsxImportSource": "flr",
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "ESNext",
     "target": "es6"
