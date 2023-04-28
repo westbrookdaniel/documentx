@@ -39,7 +39,7 @@ const App = () => {
       <div class="mt-3 flex flex-col gap-6">
         <form
           class="flex gap-2 items-center max-w-sm"
-          onSubmit={(e: Event) => {
+          onSubmit={(e) => {
             e.preventDefault()
             const form = e.target as HTMLFormElement
             const data = Object.fromEntries(new FormData(form).entries())
@@ -52,7 +52,7 @@ const App = () => {
           <input type="text" name="new-todo" placeholder="Whats new?" />
           <button>Add</button>
         </form>
-        <div ref={(el: Element) => (tasksEl = el)}>
+        <div ref={(el) => (tasksEl = el)}>
           <Tasks tasks={tasks} onCheck={onCheck} />
         </div>
       </div>
@@ -108,7 +108,7 @@ const Counter = ({ id }: { id: number }) => {
   return (
     <div class="flex items-center gap-2 border border-green-800 rounded-full w-36 justify-between">
       <button onClick={() => (ref.count = ref.count - 1)}>-</button>
-      <p ref={(el: Element) => (ref.el = el)}>{ref.count.toString()}</p>
+      <p ref={(el) => (ref.el = el)}>{ref.count.toString()}</p>
       <button onClick={() => (ref.count = ref.count + 1)}>+</button>
     </div>
   )
