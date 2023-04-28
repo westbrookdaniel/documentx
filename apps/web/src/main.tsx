@@ -68,19 +68,54 @@ const Tasks = ({
   return (
     <div class="flex flex-col gap-2">
       {tasks.map((task) => (
-        <label class="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={task.done ? true : undefined}
-            onChange={() => {
-              onCheck(task)
-            }}
-          />
-          <span class={task.done ? 'line-through' : undefined}>
-            {task.title}
-          </span>
-        </label>
+        <div class="flex items-center gap-4">
+          <label class="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={task.done ? true : undefined}
+              onChange={() => {
+                onCheck(task)
+              }}
+            />
+            <span class={task.done ? 'line-through' : undefined}>
+              {task.title}
+            </span>
+          </label>
+          <Counter />
+        </div>
       ))}
+    </div>
+  )
+}
+
+const Counter = () => {
+  let count = 1
+  let counterEl: Element | null = null
+
+  const renderCount = (count: number) => {
+    if (!counterEl) return
+    counterEl.textContent = count.toString()
+  }
+
+  return (
+    <div class="flex items-center gap-2 border border-green-800 rounded-full">
+      <button
+        onClick={() => {
+          count--
+          renderCount(count)
+        }}
+      >
+        -
+      </button>
+      <p ref={(el: Element) => (counterEl = el)}>{count}</p>
+      <button
+        onClick={() => {
+          count++
+          renderCount(count)
+        }}
+      >
+        +
+      </button>
     </div>
   )
 }
