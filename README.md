@@ -1,4 +1,4 @@
-# Jolt: Javascript Open-source Lightweight Template
+# Jolt: Javascript Optimal Lightweight Template
 
 Jolt is a javascript framework that lets you create fast and interactive web applications with minimal code. Jolt is close to vanilla javascript, includes a virtual dom for initial rendering and jsx, and feels quite familiar if you've written vanilla javascript before.
 
