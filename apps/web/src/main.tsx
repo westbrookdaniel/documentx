@@ -69,6 +69,7 @@ const Tasks = ({
     <div class="flex flex-col gap-2">
       {tasks.map((task) => (
         <div class="flex items-center gap-4">
+          <Counter id={task.id} />
           <label class="flex items-center gap-2">
             <input
               type="checkbox"
@@ -81,41 +82,32 @@ const Tasks = ({
               {task.title}
             </span>
           </label>
-          <Counter />
         </div>
       ))}
     </div>
   )
 }
 
-const Counter = () => {
-  let count = 1
-  let counterEl: Element | null = null
+const counterMap = new Map<number, number>()
 
-  const renderCount = (count: number) => {
-    if (!counterEl) return
-    counterEl.textContent = count.toString()
+const Counter = ({ id }: { id: number }) => {
+  const ref = {
+    el: null as Element | null,
+    get count() {
+      return counterMap.get(id) ?? 0
+    },
+    set count(value: number) {
+      counterMap.set(id, value)
+      if (!this.el) return
+      this.el.textContent = value.toString()
+    },
   }
 
   return (
-    <div class="flex items-center gap-2 border border-green-800 rounded-full">
-      <button
-        onClick={() => {
-          count--
-          renderCount(count)
-        }}
-      >
-        -
-      </button>
-      <p ref={(el: Element) => (counterEl = el)}>{count}</p>
-      <button
-        onClick={() => {
-          count++
-          renderCount(count)
-        }}
-      >
-        +
-      </button>
+    <div class="flex items-center gap-2 border border-green-800 rounded-full w-36 justify-between">
+      <button onClick={() => (ref.count = ref.count - 1)}>-</button>
+      <p ref={(el: Element) => (ref.el = el)}>{ref.count.toString()}</p>
+      <button onClick={() => (ref.count = ref.count + 1)}>+</button>
     </div>
   )
 }
