@@ -1,8 +1,0 @@
-{
-  "extends": "tsconfig-flr/library.json",
-  "compilerOptions": {
-    "lib": ["ES2020", "DOM", "DOM.Iterable"]
-  },
-  "include": ["render.ts"],
-  "exclude": ["dist", "build", "node_modules"]
-}

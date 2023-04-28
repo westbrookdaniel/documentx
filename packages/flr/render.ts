@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import type { Child, Children, VNode } from '.'
 
 /**

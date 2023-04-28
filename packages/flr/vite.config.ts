@@ -8,10 +8,5 @@ export default defineConfig({
             name: 'flr',
         },
     },
-    plugins: [
-        dts({
-            // Dom has extra types, so use that config
-            tsConfigFilePath: './tsconfig.dom.json',
-        }),
-    ],
+    plugins: [dts()],
 })

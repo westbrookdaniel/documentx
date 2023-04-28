@@ -1,5 +1,11 @@
 # flr
 
+## 0.2.1
+
+### Patch Changes
+
+-   Fix types not publishing
+
 ## 0.2.0
 
 ### Minor Changes
