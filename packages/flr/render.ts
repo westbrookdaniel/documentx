@@ -1,11 +1,11 @@
 /// <reference lib="dom" />
 
-import type { Child, Children, VNode } from '.'
+import type { Child, Children } from '.'
 
 /**
  * Creates dom element from a node
  */
-export function render(vnode: VNode): HTMLElement {
+export function render(vnode: JSX.Element): HTMLElement {
     if (typeof vnode.type === 'function') {
         return render(vnode.type(vnode.props))
     }
@@ -41,7 +41,7 @@ const listenersInUse = new WeakMap<
 /**
  * Applies attributes of a node to a dom element
  */
-function applyAttributes(vnode: VNode, el: HTMLElement) {
+function applyAttributes(vnode: JSX.Element, el: HTMLElement) {
     // Remove old listeners
     if (listenersInUse.has(el)) {
         const oldListeners = listenersInUse.get(el)!
@@ -105,26 +105,26 @@ function applyAttributes(vnode: VNode, el: HTMLElement) {
 function mapTypes(
     children: Children,
     handlers: {
-        vnode?: (child: VNode) => void
-        catch?: (child: Exclude<Child, VNode>) => void
+        vnode?: (child: JSX.Element) => void
+        catch?: (child: Exclude<Child, JSX.Element>) => void
     }
 ) {
     if (Array.isArray(children)) {
         children.flat().forEach((child) => {
             if (isVNode(child)) {
-                handlers.vnode?.(child as unknown as VNode)
+                handlers.vnode?.(child as unknown as JSX.Element)
             } else {
                 handlers.catch?.(child)
             }
         })
     } else if (isVNode(children)) {
-        handlers.vnode?.(children as unknown as VNode)
+        handlers.vnode?.(children as unknown as JSX.Element)
     } else {
         handlers.catch?.(children)
     }
 }
 
-function isVNode(child: any): child is VNode {
+function isVNode(child: any): child is JSX.Element {
     return (
         typeof child === 'object' && child !== null && child.type !== undefined
     )
