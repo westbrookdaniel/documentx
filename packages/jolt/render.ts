@@ -1,31 +1,31 @@
-import type { Child, Children, VNode } from '.'
+import type { Child, Children, VNode } from ".";
 
 /**
  * Creates dom element from a node
  */
 export function render(vnode: VNode): Element {
-  if (typeof vnode.type === 'function') {
-    return render(vnode.type(vnode.props))
+  if (typeof vnode.type === "function") {
+    return render(vnode.type(vnode.props));
   }
 
-  const el: Element = document.createElement(vnode.type)
+  const el: Element = document.createElement(vnode.type);
 
-  const children = vnode.props.children
+  const children = vnode.props.children;
   if (children) {
     mapTypes(children, {
       vnode: (child) => {
-        el.appendChild(render(child))
+        el.appendChild(render(child));
       },
       catch: (child) => {
-        if (child === undefined || child === null) return
-        el.appendChild(document.createTextNode(child.toString()))
+        if (child === undefined || child === null) return;
+        el.appendChild(document.createTextNode(child.toString()));
       },
-    })
+    });
   }
 
-  applyAttributes(vnode, el)
+  applyAttributes(vnode, el);
 
-  return el
+  return el;
 }
 
 /**
@@ -35,7 +35,7 @@ export function render(vnode: VNode): Element {
 const listenersInUse = new WeakMap<
   Element,
   [string, EventListenerOrEventListenerObject][]
->()
+>();
 
 /**
  * Applies attributes of a node to a dom element
@@ -43,43 +43,43 @@ const listenersInUse = new WeakMap<
 function applyAttributes(vnode: VNode, el: Element) {
   // Remove old listeners
   if (listenersInUse.has(el)) {
-    const oldListeners = listenersInUse.get(el)!
+    const oldListeners = listenersInUse.get(el)!;
     oldListeners.forEach(([eventType, listener]) => {
-      el.removeEventListener(eventType, listener)
-    })
+      el.removeEventListener(eventType, listener);
+    });
     // Remove from listeners in use
-    listenersInUse.delete(el)
+    listenersInUse.delete(el);
   }
 
   // Apply attributes
   // Any code that modifies the dom will be run too
   Object.entries(vnode.props).forEach(([key, value]) => {
-    if (key === 'children') return
+    if (key === "children") return;
     // We want to apply ref at the end
-    if (key === 'ref') return
-    if (value === undefined) return
-    if (key.startsWith('on') && typeof value === 'function') {
-      const eventType = key.slice(2).toLowerCase()
+    if (key === "ref") return;
+    if (value === undefined) return;
+    if (key.startsWith("on") && typeof value === "function") {
+      const eventType = key.slice(2).toLowerCase();
 
       // TODO: Type props so we don't need this cast
-      const event = value as unknown as EventListener
+      const event = value as unknown as EventListener;
 
-      el.addEventListener(eventType, event)
+      el.addEventListener(eventType, event);
 
       // Add to listeners in use for cleanup next time
       if (!listenersInUse.has(el)) {
-        listenersInUse.set(el, [[eventType, event]])
+        listenersInUse.set(el, [[eventType, event]]);
       } else {
-        listenersInUse.get(el)!.push([eventType, event])
+        listenersInUse.get(el)!.push([eventType, event]);
       }
-      return
+      return;
     }
     // TODO: Fix this cast
-    el.setAttribute(key, value as any)
-  })
+    el.setAttribute(key, value as any);
+  });
 
   // Apply ref
-  if (vnode.props.ref) vnode.props.ref(el)
+  if (vnode.props.ref) vnode.props.ref(el);
 }
 
 /**
@@ -88,23 +88,23 @@ function applyAttributes(vnode: VNode, el: Element) {
 function mapTypes(
   children: Children,
   handlers: {
-    vnode?: (child: VNode) => void
-    catch?: (child: Exclude<Child, VNode>) => void
+    vnode?: (child: VNode) => void;
+    catch?: (child: Exclude<Child, VNode>) => void;
   }
 ) {
   if (Array.isArray(children)) {
     children.flat().forEach((child) => {
       // TODO: Use symbol to check if it's a vnode
-      if (typeof child === 'object') {
-        handlers.vnode?.(child as unknown as VNode)
+      if (typeof child === "object") {
+        handlers.vnode?.(child as unknown as VNode);
       } else {
-        handlers.catch?.(child)
+        handlers.catch?.(child);
       }
-    })
-  } else if (typeof children === 'object') {
+    });
+  } else if (typeof children === "object") {
     // TODO: Use symbol to check if it's a vnode
-    handlers.vnode?.(children as unknown as VNode)
+    handlers.vnode?.(children as unknown as VNode);
   } else {
-    handlers.catch?.(children)
+    handlers.catch?.(children);
   }
 }

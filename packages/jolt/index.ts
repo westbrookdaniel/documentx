@@ -1,9 +1,9 @@
 export type VNode = {
-  type: any
-  props: any & { children: Children[] }
-}
+  type: any;
+  props: any & { children: Children[] };
+};
 
-export type Children = Child | Child[]
+export type Children = Child | Child[];
 
 export type Child =
   | VNode[]
@@ -14,28 +14,28 @@ export type Child =
   | bigint
   | boolean
   | null
-  | undefined
+  | undefined;
 
 declare global {
   namespace JSX {
     interface Element extends VNode {}
 
     interface IntrinsicElements {
-      [elemName: string]: any
+      [elemName: string]: any;
     }
 
     interface ElementAttributesProperty {
-      props: any
+      props: any;
     }
 
     interface ElementChildrenAttribute {
-      children: any
+      children: any;
     }
 
     interface IntrinsicAttributes {
-      [elemName: string]: any & { ref?: (el: Element) => void }
+      [elemName: string]: any & { ref?: (el: Element) => void };
     }
   }
 }
 
-export * from './render'
+export * from "./render";

@@ -27,16 +27,16 @@
   },
   "license": "MIT",
   "scripts": {
-    "lint": "eslint \"**/*.ts*\"",
     "dev": "vite build --watch",
     "build": "vite build"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*",
+    "tsconfig-jolt": "workspace:*",
     "typescript": "^4.5.2",
     "vite": "^4.3.2",
     "vite-plugin-dts": "^2.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

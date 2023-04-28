@@ -1,5 +1,5 @@
 {
-  "extends": "tsconfig/library.json",
+  "extends": "tsconfig-jolt/library.json",
   "include": ["."],
   "exclude": ["dist", "build", "node_modules"],
   "references": [{ "path": "./tsconfig.dom.json" }]

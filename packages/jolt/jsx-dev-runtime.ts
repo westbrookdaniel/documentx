@@ -1,3 +1,3 @@
-import { Fragment, jsx } from './jsx-runtime'
+import { Fragment, jsx } from "./jsx-runtime";
 
-export { jsx as jsxDEV, jsx as jsxsDEV, Fragment }
+export { jsx as jsxDEV, jsx as jsxsDEV, Fragment };
