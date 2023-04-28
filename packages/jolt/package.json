@@ -1,19 +1,42 @@
 {
   "name": "jolt",
   "version": "0.0.0",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./index.ts",
-    "./jsx-runtime": "./jsx-runtime.ts",
-    "./jsx-dev-runtime": "./jsx-dev-runtime.ts"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./jsx-runtime": {
+      "import": "./dist/jsx-runtime.js",
+      "require": "./dist/jsx-runtime.cjs",
+      "types": "./dist/jsx-runtime.d.ts"
+    },
+    "./jsx-dev-runtime": {
+      "import": "./dist/jsx-runtime.js",
+      "require": "./dist/jsx-dev-runtime.cjs",
+      "types": "./dist/jsx-dev-runtime.d.ts"
+    }
   },
   "license": "MIT",
   "scripts": {
-    "lint": "eslint \"**/*.ts*\""
+    "lint": "eslint \"**/*.ts*\"",
+    "dev": "vite build --watch",
+    "build": "vite build"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "typescript": "^4.5.2"
+    "typescript": "^4.5.2",
+    "vite": "^4.3.2",
+    "vite-plugin-dts": "^2.3.0"
   }
 }

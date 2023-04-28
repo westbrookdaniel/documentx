@@ -1,6 +1,6 @@
 {
   "extends": "tsconfig/library.json",
-  "include": [".", "../eslint-config-custom"],
+  "include": ["."],
   "exclude": ["dist", "build", "node_modules"],
   "references": [{ "path": "./tsconfig.dom.json" }]
 }
