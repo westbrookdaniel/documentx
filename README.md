@@ -4,9 +4,9 @@ flr is a javascript framework that lets you create fast and interactive web appl
 
 ## Features
 
-- **Simple and intuitive**: flr uses jsx syntax and a component-based architecture to make your code easy to read and write.
-- **Fast and efficient**: All dom updates in flr are manual so your app has no overhead, making it blazing fast and responsive.
-- **Flexible and compatible**: flr works with any vanilla frontend library, and can be easily integrated with existing projects.
+-   **Simple and intuitive**: flr uses jsx syntax and a component-based architecture to make your code easy to read and write.
+-   **Fast and efficient**: All dom updates in flr are manual so your app has no overhead, making it blazing fast and responsive.
+-   **Flexible and compatible**: flr works with any vanilla frontend library, and can be easily integrated with existing projects.
 
 ## License
 

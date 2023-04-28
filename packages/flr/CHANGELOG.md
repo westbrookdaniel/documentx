@@ -4,4 +4,4 @@
 
 ### Minor Changes
 
-- cfa1f49: Initial Version
+-   cfa1f49: Initial Version
