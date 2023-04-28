@@ -3,18 +3,18 @@
 @tailwind utilities;
 
 body {
-  @apply bg-neutral-900  text-neutral-100;
+    @apply bg-neutral-900  text-neutral-100;
 }
 
 button {
-  @apply text-neutral-100 bg-green-700 px-5 py-1.5 rounded-full hover:bg-green-800 focus:ring-2 focus:ring-green-600 active:bg-green-900 transition-colors duration-150;
+    @apply text-neutral-100 bg-green-700 px-5 py-1.5 rounded-full hover:bg-green-800 focus:ring-2 focus:ring-green-600 active:bg-green-900 transition-colors duration-150;
 }
 
 input[type='text'],
 input[type='checkbox'] {
-  @apply block rounded-md border-gray-300 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-neutral-900;
+    @apply block rounded-md border-gray-300 shadow-sm focus:border-green-300 focus:ring focus:ring-green-200 focus:ring-opacity-50 text-neutral-900;
 }
 
 input[type='checkbox'] {
-  @apply text-green-600;
+    @apply text-green-600;
 }

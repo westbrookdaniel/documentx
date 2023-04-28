@@ -1,17 +1,17 @@
 {
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "turbo run build --filter=...flr && changeset publish"
-  },
-  "devDependencies": {
-    "@changesets/cli": "^2.26.1",
-    "prettier": "^2.5.1",
-    "turbo": "^1.9.3"
-  },
-  "packageManager": "pnpm@7.15.0",
-  "name": "flr"
+    "scripts": {
+        "build": "turbo run build",
+        "dev": "turbo run dev",
+        "format": "prettier --write \"**/*\"",
+        "changeset": "changeset",
+        "version-packages": "changeset version",
+        "release": "turbo run build --filter=...flr && changeset publish"
+    },
+    "devDependencies": {
+        "@changesets/cli": "^2.26.1",
+        "prettier": "^2.5.1",
+        "turbo": "^1.9.3"
+    },
+    "packageManager": "pnpm@7.15.0",
+    "name": "flr"
 }

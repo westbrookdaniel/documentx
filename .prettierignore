@@ -39,3 +39,8 @@ yarn-error.log*
 dist
 
 tsconfig.tsbuildinfo
+
+pnpm-lock.yaml
+.gitignore
+.npmrc
+.prettierignore

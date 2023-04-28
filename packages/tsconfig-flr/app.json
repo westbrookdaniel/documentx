@@ -1,18 +1,18 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "App",
-  "extends": "./base.json",
-  "compilerOptions": {
-    "declaration": false,
-    "declarationMap": false,
-    "incremental": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "flr",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "ESNext",
-    "target": "es6"
-  },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "App",
+    "extends": "./base.json",
+    "compilerOptions": {
+        "declaration": false,
+        "declarationMap": false,
+        "incremental": true,
+        "noEmit": true,
+        "jsx": "react-jsx",
+        "jsxImportSource": "flr",
+        "lib": ["dom", "dom.iterable", "esnext"],
+        "module": "ESNext",
+        "target": "es6"
+    },
+    "include": ["src"],
+    "exclude": ["node_modules"]
 }
