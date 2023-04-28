@@ -1,6 +1,5 @@
 import './index.css'
-import { render } from 'framework'
-import { withFormData } from 'utils'
+import { render } from 'jolt'
 
 type Task = {
   id: number
@@ -40,12 +39,15 @@ const App = () => {
       <div class="mt-3 flex flex-col gap-6">
         <form
           class="flex gap-2 items-center max-w-sm"
-          onSubmit={withFormData((data: { 'new-todo': string }, form) => {
-            const title = data['new-todo']
+          onSubmit={(e: Event) => {
+            e.preventDefault()
+            const form = e.target as HTMLFormElement
+            const data = Object.fromEntries(new FormData(form).entries())
+            const title = data['new-todo'] as string
             if (title.length === 0) return
             addTask(title)
             form.reset()
-          })}
+          }}
         >
           <input type="text" name="new-todo" placeholder="Whats new?" />
           <button>Add</button>
