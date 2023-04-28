@@ -10,7 +10,7 @@ flr is a javascript framework that lets you create fast and interactive web appl
 
 ## License
 
-flr is licensed under the [MIT License](https://github.com/westbrookdaniel/jolt/blob/master/LICENSE).
+flr is licensed under the [MIT License](https://github.com/westbrookdaniel/flr/blob/master/LICENSE).
 
 ## Contributing
 
