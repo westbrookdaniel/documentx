@@ -1,6 +1,6 @@
 /// <reference lib="dom" />
 
-import type { Child, Children } from '.'
+import type { Child, Children } from './index'
 
 /**
  * Creates dom element from a node
