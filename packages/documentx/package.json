@@ -2,8 +2,17 @@
     "name": "documentx",
     "version": "0.2.2",
     "type": "module",
+    "license": "MIT",
+    "author": "Daniel Westbrook",
+    "keywords": [
+        "frontend",
+        "framework",
+        "documentx"
+    ],
     "files": [
-        "dist"
+        "dist",
+        "LICENSE",
+        "README"
     ],
     "main": "./dist/index.cjs",
     "module": "./dist/index.js",
@@ -23,9 +32,11 @@
             "import": "./dist/jsx-dev-runtime.js",
             "require": "./dist/jsx-dev-runtime.cjs",
             "types": "./dist/jsx-dev-runtime.d.ts"
-        }
+        },
+        "./package.json": "./package.json",
+        "./dist/*": "./dist/*"
     },
-    "license": "MIT",
+    "homepage": "https://github.com/westbrookdaniel/documentx#readme",
     "scripts": {
         "dev": "vite build --watch",
         "build": "vite build"

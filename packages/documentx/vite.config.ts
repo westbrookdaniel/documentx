@@ -4,7 +4,11 @@ import dts from 'vite-plugin-dts'
 export default defineConfig({
     build: {
         lib: {
-            entry: ['./index.ts', './jsx-runtime.ts', './jsx-dev-runtime.ts'],
+            entry: [
+                './src/index.ts',
+                './src/jsx-runtime.ts',
+                './src/jsx-dev-runtime.ts',
+            ],
             name: 'documentx',
         },
     },
