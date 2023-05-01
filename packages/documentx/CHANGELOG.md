@@ -1,5 +1,11 @@
 # documentx
 
+## 0.2.5
+
+### Patch Changes
+
+-   Fix build outputs
+
 ## 0.2.4
 
 ### Patch Changes
