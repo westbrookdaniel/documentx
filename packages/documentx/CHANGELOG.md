@@ -1,5 +1,11 @@
 # documentx
 
+## 0.2.3
+
+### Patch Changes
+
+-   Fix typescript and update package
+
 ## 0.2.2
 
 ### Patch Changes
