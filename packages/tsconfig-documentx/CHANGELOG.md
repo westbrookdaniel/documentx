@@ -1,4 +1,4 @@
-# tsconfig-domjsx
+# tsconfig-documentx
 
 ## 0.2.0
 

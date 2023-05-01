@@ -1,5 +1,5 @@
 {
-    "extends": "tsconfig-domjsx/app.json",
+    "extends": "tsconfig-documentx/app.json",
     "include": ["."],
     "exclude": ["dist", "build", "node_modules"]
 }

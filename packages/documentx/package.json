@@ -1,5 +1,5 @@
 {
-    "name": "domjsx",
+    "name": "documentx",
     "version": "0.2.2",
     "type": "module",
     "files": [
@@ -31,7 +31,7 @@
         "build": "vite build"
     },
     "devDependencies": {
-        "tsconfig-domjsx": "workspace:*",
+        "tsconfig-documentx": "workspace:*",
         "typescript": "^4.5.2",
         "vite": "^4.3.2",
         "vite-plugin-dts": "^2.3.0"

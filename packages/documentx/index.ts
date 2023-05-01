@@ -6,7 +6,7 @@ export * from './render'
 
 export type VNode<P = {}> = {
     type: string | ComponentType<P>
-    props: P & domjsxDOMAttributes
+    props: P & documentxDOMAttributes
 }
 
 export type Children = Child | Child[]
@@ -24,7 +24,7 @@ export type Child =
 
 export type ComponentType<P = {}> = (props: P) => JSX.Element
 
-export interface domjsxDOMAttributes {
+export interface documentxDOMAttributes {
     children?: Children
     ref?: (el: HTMLElement) => void
     dangerouslySetInnerHTML?: {
@@ -405,7 +405,7 @@ declare global {
             EventHandler<TargetedWheelEvent<Target>>
 
         export interface DOMAttributes<Target extends EventTarget>
-            extends domjsxDOMAttributes {
+            extends documentxDOMAttributes {
             // Image Events
             onLoad?: GenericEventHandler<Target> | undefined
             onLoadCapture?: GenericEventHandler<Target> | undefined
