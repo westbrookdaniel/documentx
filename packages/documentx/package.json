@@ -1,6 +1,6 @@
 {
     "name": "documentx",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "type": "module",
     "license": "MIT",
     "author": "Daniel Westbrook",
@@ -12,7 +12,9 @@
     "files": [
         "dist",
         "LICENSE",
-        "README"
+        "README.md",
+        "jsx-runtime.d.ts",
+        "jsx-dev-runtime.d.ts"
     ],
     "main": "./dist/index.cjs",
     "module": "./dist/index.js",
@@ -26,20 +28,19 @@
         "./jsx-runtime": {
             "import": "./dist/jsx-runtime.js",
             "require": "./dist/jsx-runtime.cjs",
-            "types": "./dist/jsx-runtime.d.ts"
+            "types": "./jsx-runtime.d.ts"
         },
         "./jsx-dev-runtime": {
             "import": "./dist/jsx-dev-runtime.js",
             "require": "./dist/jsx-dev-runtime.cjs",
-            "types": "./dist/jsx-dev-runtime.d.ts"
+            "types": "./jsx-dev-runtime.d.ts"
         },
         "./package.json": "./package.json",
         "./dist/*": "./dist/*"
     },
     "homepage": "https://github.com/westbrookdaniel/documentx#readme",
     "scripts": {
-        "dev": "vite build --watch",
-        "build": "vite build"
+        "build": "vite build && mv ./dist/jsx-runtime.d.ts ./jsx-runtime.d.ts && mv ./dist/jsx-dev-runtime.d.ts ./jsx-dev-runtime.d.ts"
     },
     "devDependencies": {
         "tsconfig-documentx": "workspace:*",
