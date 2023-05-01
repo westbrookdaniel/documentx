@@ -1,5 +1,5 @@
 import './index.css'
-import { render } from 'flr'
+import { render } from 'domjsx'
 
 type Task = {
     id: number

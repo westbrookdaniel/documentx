@@ -5,7 +5,7 @@ export default defineConfig({
     build: {
         lib: {
             entry: ['./index.ts', './jsx-runtime.ts', './jsx-dev-runtime.ts'],
-            name: 'flr',
+            name: 'domjsx',
         },
     },
     plugins: [dts()],

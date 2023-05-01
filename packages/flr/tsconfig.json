@@ -1,5 +1,5 @@
 {
-    "extends": "tsconfig-flr/library.json",
+    "extends": "tsconfig-domjsx/library.json",
     "include": ["."],
     "exclude": ["dist", "build", "node_modules"]
 }

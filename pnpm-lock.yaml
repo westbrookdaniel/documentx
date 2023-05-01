@@ -17,10 +17,10 @@ importers:
       '@tailwindcss/forms': ^0.5.3
       '@tailwindcss/typography': ^0.5.9
       autoprefixer: ^10.4.14
-      flr: workspace:*
+      domjsx: workspace:*
       postcss: ^8.4.23
       tailwindcss: ^3.3.2
-      tsconfig-flr: workspace:*
+      tsconfig-domjsx: workspace:*
       typescript: ^5.0.2
       vite: ^4.3.2
     dependencies:
@@ -28,26 +28,26 @@ importers:
       '@tailwindcss/typography': 0.5.9_tailwindcss@3.3.2
     devDependencies:
       autoprefixer: 10.4.14_postcss@8.4.23
-      flr: link:../../packages/flr
+      domjsx: link:../../packages/domjsx
       postcss: 8.4.23
       tailwindcss: 3.3.2
-      tsconfig-flr: link:../../packages/tsconfig-flr
+      tsconfig-domjsx: link:../../packages/tsconfig-domjsx
       typescript: 5.0.4
       vite: 4.3.3
 
-  packages/flr:
+  packages/domjsx:
     specifiers:
-      tsconfig-flr: workspace:*
+      tsconfig-domjsx: workspace:*
       typescript: ^4.5.2
       vite: ^4.3.2
       vite-plugin-dts: ^2.3.0
     devDependencies:
-      tsconfig-flr: link:../tsconfig-flr
+      tsconfig-domjsx: link:../tsconfig-domjsx
       typescript: 4.9.3
       vite: 4.3.3
       vite-plugin-dts: 2.3.0_vite@4.3.3
 
-  packages/tsconfig-flr:
+  packages/tsconfig-domjsx:
     specifiers: {}
 
 packages:

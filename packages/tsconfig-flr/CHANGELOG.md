@@ -1,4 +1,4 @@
-# tsconfig-flr
+# tsconfig-domjsx
 
 ## 0.2.0
 
