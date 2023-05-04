@@ -1,5 +1,11 @@
 # documentx
 
+## 0.3.0
+
+### Minor Changes
+
+-   Add renderToString
+
 ## 0.2.6
 
 ### Patch Changes
