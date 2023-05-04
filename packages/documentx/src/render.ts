@@ -102,7 +102,7 @@ function applyAttributes(vnode: JSX.Element, el: HTMLElement) {
 /**
  * Maps over the children of a node
  */
-function mapTypes(
+export function mapTypes(
     children: Children,
     handlers: {
         vnode?: (child: JSX.Element) => void

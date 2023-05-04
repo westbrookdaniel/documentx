@@ -2,7 +2,8 @@
 // Ensure things work in SSR
 /// <reference lib="dom" />
 
-export * from './render'
+export { render } from './render'
+export { renderToString } from './renderToString'
 
 export type VNode<P = {}> = {
     type: string | ComponentType<P>
