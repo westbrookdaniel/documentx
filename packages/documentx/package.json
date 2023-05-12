@@ -12,9 +12,7 @@
     "files": [
         "dist",
         "LICENSE",
-        "README.md",
-        "jsx-runtime.d.ts",
-        "jsx-dev-runtime.d.ts"
+        "README.md"
     ],
     "main": "./dist/index.cjs",
     "module": "./dist/index.module.js",
