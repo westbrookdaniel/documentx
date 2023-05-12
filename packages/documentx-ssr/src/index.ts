@@ -45,7 +45,9 @@ async function main() {
         try {
             // send html
             let html = fs.readFileSync(
-                path.resolve(__dirname, 'index.html'),
+                isDev
+                    ? path.resolve(process.cwd(), 'index.html')
+                    : path.resolve(__dirname, 'index.html'),
                 'utf-8'
             )
 
