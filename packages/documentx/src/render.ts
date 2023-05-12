@@ -5,29 +5,50 @@ import type { Child, Children } from './index'
 /**
  * Creates dom element from a node
  */
-export function render(vnode: JSX.Element): HTMLElement {
+export function render(
+    vnode: JSX.Element
+): HTMLElement | Text | (HTMLElement | Text)[] {
+    // Handling fragments
+    if (Array.isArray(vnode)) {
+        return vnode.map((child) => render(child)).flat()
+    }
+    if (!vnode.type) {
+        return getNodesFromChildren(vnode.props.children)
+    }
+    // Handling components
     if (typeof vnode.type === 'function') {
         return render(vnode.type(vnode.props))
     }
 
     const el: HTMLElement = document.createElement(vnode.type)
-
-    const children = vnode.props.children
-    if (children) {
-        mapTypes(children, {
-            vnode: (child) => {
-                el.appendChild(render(child))
-            },
-            catch: (child) => {
-                if (child === undefined || child === null) return
-                el.appendChild(document.createTextNode(child.toString()))
-            },
-        })
-    }
+    getNodesFromChildren(vnode.props.children).forEach((child) => {
+        el.appendChild(child)
+    })
 
     applyAttributes(vnode, el)
 
     return el
+}
+
+const getNodesFromChildren = (children: Children) => {
+    const toAppend: (Text | HTMLElement)[] = []
+    if (children) {
+        mapTypes(children, {
+            vnode: (child) => {
+                const childEl = render(child)
+                if (Array.isArray(childEl)) {
+                    childEl.forEach((child) => toAppend.push(child))
+                } else {
+                    toAppend.push(childEl)
+                }
+            },
+            catch: (child) => {
+                if (child === undefined || child === null) return
+                toAppend.push(document.createTextNode(child.toString()))
+            },
+        })
+    }
+    return toAppend
 }
 
 /**
