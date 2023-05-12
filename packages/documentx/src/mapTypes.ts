@@ -1,4 +1,4 @@
-import { Child, Children } from './index'
+import type { Child, Children } from './index'
 
 /**
  * Maps over the children of a node
