@@ -1,5 +1,11 @@
 # documentx
 
+## 0.7.1
+
+### Patch Changes
+
+-   Fix types
+
 ## 0.7.0
 
 ### Minor Changes
