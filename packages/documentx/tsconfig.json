@@ -1,5 +1,11 @@
 {
     "extends": "tsconfig-documentx/library.json",
     "include": ["."],
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "jsxImportSource": "documentx",
+        "jsxFactory": "",
+        "jsxFragmentFactory": ""
+    },
     "exclude": ["dist", "build", "node_modules"]
 }

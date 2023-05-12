@@ -34,6 +34,11 @@
             "require": "./dist/jsx-dev-runtime.cjs",
             "types": "./dist/jsx-dev-runtime.d.ts"
         },
+        "./util": {
+            "import": "./dist/util/index.js",
+            "require": "./dist/util/index.cjs",
+            "types": "./dist/util/index.d.ts"
+        },
         "./package.json": "./package.json",
         "./dist/*": "./dist/*"
     },
@@ -48,5 +53,8 @@
     },
     "publishConfig": {
         "access": "public"
+    },
+    "dependencies": {
+        "history": "^5.3.0"
     }
 }

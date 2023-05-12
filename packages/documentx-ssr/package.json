@@ -55,12 +55,12 @@
         "access": "public"
     },
     "peerDependencies": {
-        "documentx": "workspace:*",
         "cross-fetch": "^3.1.5",
+        "documentx": "workspace:*",
         "express": "^4.18.2"
     },
     "dependencies": {
-        "vite": "^4.3.2",
-        "cac": "^6.7.14"
+        "cac": "^6.7.14",
+        "vite": "^4.3.2"
     }
 }
