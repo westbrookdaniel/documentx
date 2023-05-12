@@ -5,48 +5,41 @@ import type { Child, Children } from './index'
 /**
  * Creates dom element from a node
  */
-export function render(vnode: JSX.Element): (HTMLElement | Text)[] {
+export async function render(
+    vnode: JSX.Element
+): Promise<(HTMLElement | Text)[]> {
     // Handling fragments
     if (Array.isArray(vnode)) {
-        return vnode.map((child) => render(child)).flat()
+        return (await Promise.all(vnode.map((child) => render(child)))).flat()
     }
     if (!vnode.type) {
         return getNodesFromChildren(vnode.props.children)
     }
     // Handling components
     if (typeof vnode.type === 'function') {
-        return render(vnode.type(vnode.props))
+        return render(await vnode.type(vnode.props))
     }
 
     const el: HTMLElement = document.createElement(vnode.type)
-    getNodesFromChildren(vnode.props.children).forEach((child) => {
-        el.appendChild(child)
-    })
+    const children = await getNodesFromChildren(vnode.props.children)
+    children.forEach((child) => el.appendChild(child))
 
     applyAttributes(vnode, el)
 
     return [el]
 }
 
-const getNodesFromChildren = (children: Children) => {
-    const toAppend: (Text | HTMLElement)[] = []
-    if (children) {
-        mapTypes(children, {
-            vnode: (child) => {
-                const childEl = render(child)
-                if (Array.isArray(childEl)) {
-                    childEl.forEach((child) => toAppend.push(child))
-                } else {
-                    toAppend.push(childEl)
-                }
-            },
-            catch: (child) => {
-                if (child === undefined || child === null) return
-                toAppend.push(document.createTextNode(child.toString()))
-            },
-        })
-    }
-    return toAppend
+const getNodesFromChildren = async (children: Children) => {
+    return await mapTypes<Text | HTMLElement>(children, {
+        vnode: async (child) => {
+            return await render(child)
+        },
+        catch: (child) => {
+            if (child === undefined || child === null) return
+            return document.createTextNode(child.toString())
+        },
+    })
+    return []
 }
 
 /**
@@ -121,25 +114,38 @@ function applyAttributes(vnode: JSX.Element, el: HTMLElement) {
 /**
  * Maps over the children of a node
  */
-export function mapTypes(
+export async function mapTypes<T>(
     children: Children,
     handlers: {
-        vnode?: (child: JSX.Element) => void
-        catch?: (child: Exclude<Child, JSX.Element>) => void
+        vnode?: (
+            child: JSX.Element
+        ) => Promise<T | T[] | undefined> | T | T[] | undefined
+        catch?: (
+            child: Exclude<Child, JSX.Element>
+        ) => Promise<T | T[] | undefined> | T | T[] | undefined
     }
-) {
+): Promise<T[]> {
     if (Array.isArray(children)) {
-        children.flat().forEach((child) => {
-            if (isVNode(child)) {
-                handlers.vnode?.(child as unknown as JSX.Element)
-            } else {
-                handlers.catch?.(child)
-            }
-        })
+        const result = await Promise.all(
+            children.flat().map((child) => {
+                if (isVNode(child)) {
+                    return handlers.vnode?.(child as unknown as JSX.Element)
+                } else {
+                    return handlers.catch?.(child)
+                }
+            })
+        )
+        return result.filter(Boolean).flat() as T[]
     } else if (isVNode(children)) {
-        handlers.vnode?.(children as unknown as JSX.Element)
+        const result = await handlers.vnode?.(
+            children as unknown as JSX.Element
+        )
+        if (result === undefined) return []
+        return Array.isArray(result) ? result : [result]
     } else {
-        handlers.catch?.(children)
+        const result = await handlers.catch?.(children)
+        if (result === undefined) return []
+        return Array.isArray(result) ? result : [result]
     }
 }
 

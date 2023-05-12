@@ -46,7 +46,7 @@
     "devDependencies": {
         "microbundle": "^0.15.1",
         "tsconfig-documentx": "workspace:*",
-        "typescript": "^4.5.2"
+        "typescript": "5.1.0-beta"
     },
     "publishConfig": {
         "access": "public"

@@ -22,7 +22,9 @@ export type Child =
     | null
     | undefined
 
-export type ComponentType<P = {}> = (props: P) => JSX.Element
+export type ComponentType<P = {}> = (
+    props: P
+) => JSX.Element | Promise<JSX.Element>
 
 export interface documentxDOMAttributes {
     children?: Children
@@ -53,11 +55,9 @@ declare global {
 
         export type Booleanish = boolean | 'true' | 'false'
 
-        interface Element extends VNode {}
+        export type ElementType = keyof IntrinsicElements | ComponentType<any>
 
-        interface IntrinsicElements {
-            [elemName: string]: any
-        }
+        interface Element extends VNode {}
 
         interface ElementAttributesProperty {
             props: any
