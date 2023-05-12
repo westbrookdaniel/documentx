@@ -1,5 +1,11 @@
 # documentx
 
+## 0.5.0
+
+### Minor Changes
+
+-   Add back renderToString
+
 ## 0.4.0
 
 ### Minor Changes
