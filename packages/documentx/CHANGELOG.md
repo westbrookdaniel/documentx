@@ -1,5 +1,11 @@
 # documentx
 
+## 0.7.2
+
+### Patch Changes
+
+-   Fix util types
+
 ## 0.7.1
 
 ### Patch Changes
