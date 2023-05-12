@@ -1,4 +1,4 @@
-import { render } from '../render'
+import { render } from '../src/render'
 import { Reference } from './ref'
 import { getTarget } from './getTarget'
 

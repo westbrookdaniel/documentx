@@ -1,4 +1,4 @@
-import { Reference } from '.'
+import { Reference } from './ref'
 
 /**
  * Safely get the target

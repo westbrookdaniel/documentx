@@ -1,4 +1,4 @@
-import { render } from '../render'
+import { render } from '../src/render'
 import { History, createBrowserHistory, createMemoryHistory } from 'history'
 import { hijackLinks } from './hijackLinks'
 import { Reference } from './ref'

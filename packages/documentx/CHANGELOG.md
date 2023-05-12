@@ -1,5 +1,11 @@
 # documentx
 
+## 0.7.0
+
+### Minor Changes
+
+-   Fix util dir
+
 ## 0.6.0
 
 ### Minor Changes
