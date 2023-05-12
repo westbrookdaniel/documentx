@@ -1,7 +1,7 @@
 import path from 'node:path'
 import type { Plugin } from 'vite'
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname)
+const cwd = process.cwd()
 
 declare global {
     var documentxssr: { css: string[] }
@@ -19,7 +19,7 @@ export default function documentxssr(): Plugin[] {
             apply: 'serve',
             transform(_code, id, opts) {
                 if (opts?.ssr && id.endsWith('.css')) {
-                    const relativeId = path.relative(__dirname, id)
+                    const relativeId = path.relative(cwd, id)
                     global.documentxssr.css.push('/' + relativeId)
                 }
             },
@@ -36,10 +36,7 @@ export default function documentxssr(): Plugin[] {
                             ...config.build,
                             rollupOptions: {
                                 input: {
-                                    main: path.resolve(
-                                        __dirname,
-                                        'src/main.tsx'
-                                    ),
+                                    main: path.resolve(cwd, 'src/main.tsx'),
                                 },
                             },
                             emptyOutDir: false,
