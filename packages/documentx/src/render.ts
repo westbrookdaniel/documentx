@@ -5,9 +5,7 @@ import type { Child, Children } from './index'
 /**
  * Creates dom element from a node
  */
-export function render(
-    vnode: JSX.Element
-): HTMLElement | Text | (HTMLElement | Text)[] {
+export function render(vnode: JSX.Element): (HTMLElement | Text)[] {
     // Handling fragments
     if (Array.isArray(vnode)) {
         return vnode.map((child) => render(child)).flat()
@@ -27,7 +25,7 @@ export function render(
 
     applyAttributes(vnode, el)
 
-    return el
+    return [el]
 }
 
 const getNodesFromChildren = (children: Children) => {
