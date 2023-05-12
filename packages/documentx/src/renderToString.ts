@@ -46,8 +46,10 @@ export async function renderToString(vnode: JSX.Element): Promise<string[]> {
                     })
                     .join(';')}"`
             }
+            if (value === null || value === false) return null
             return `${key}="${value}"`
         })
+        .filter(Boolean)
         .join(' ')
 
     if (stringAttributes) stringAttributes = ' ' + stringAttributes
