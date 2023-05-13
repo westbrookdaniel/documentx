@@ -1,5 +1,11 @@
 # documentx
 
+## 0.7.3
+
+### Patch Changes
+
+-   Add renderclient
+
 ## 0.7.2
 
 ### Patch Changes
