@@ -1,5 +1,11 @@
 # documentx
 
+## 0.7.4
+
+### Patch Changes
+
+-   Fix RenderClient types
+
 ## 0.7.3
 
 ### Patch Changes
