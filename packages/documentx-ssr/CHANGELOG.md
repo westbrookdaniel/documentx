@@ -1,5 +1,11 @@
 # documentx-ssr
 
+## 2.0.6
+
+### Patch Changes
+
+-   Update imports
+
 ## 2.0.5
 
 ### Patch Changes
