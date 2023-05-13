@@ -1,5 +1,13 @@
 # documentx-ssr
 
+## 2.0.7
+
+### Patch Changes
+
+-   Fixes from template
+-   Updated dependencies
+    -   documentx@0.7.5
+
 ## 2.0.6
 
 ### Patch Changes

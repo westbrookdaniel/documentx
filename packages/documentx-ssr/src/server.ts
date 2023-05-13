@@ -30,6 +30,9 @@ async function main() {
                 'utf-8'
             )
 
+            // minify html
+            html = html.replace(/<!--(.*?)-->|\s\B/gm, '')
+
             // replace outlet with app
             const { default: App, router } = mainModule
 
@@ -37,9 +40,6 @@ async function main() {
 
             const appHtml = await renderToString({ type: App, props: {} })
             html = html.replace('<!--outlet-->', appHtml.join(''))
-
-            // minify html
-            html = html.replace(/<!--(.*?)-->|\s\B/gm, '')
 
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
         } catch (e: any) {

@@ -62,9 +62,9 @@ const hijackLink = (history: BrowserHistory, el: HTMLAnchorElement) => {
 
     // If same origin and internal
     el.addEventListener('click', (e) => {
-        e.preventDefault()
         const href = el.getAttribute('href')!
         if (!el.target && href?.startsWith('/')) {
+            e.preventDefault()
             history.push(href)
         }
     })

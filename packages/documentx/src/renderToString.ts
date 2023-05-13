@@ -35,8 +35,12 @@ export async function renderToString(vnode: JSX.Element): Promise<string[]> {
             }
             if (key === 'style' && typeof value === 'object') {
                 return `style="${Object.entries(value)
-                    .map(([styleKey, styleValue]) => {
-                        return `${styleKey}:${
+                    .map(([k, styleValue]) => {
+                        k = k.replace(
+                            /[A-Z]/g,
+                            (match) => `-${match.toLowerCase()}`
+                        )
+                        return `${k}:${
                             typeof styleValue === 'number'
                                 ? `${styleValue}px`
                                 : styleValue === null
@@ -53,6 +57,8 @@ export async function renderToString(vnode: JSX.Element): Promise<string[]> {
         .join(' ')
 
     if (stringAttributes) stringAttributes = ' ' + stringAttributes
+
+    if (!children.length) return [`<${vnode.type}${stringAttributes} />`]
 
     return [
         `<${vnode.type}${stringAttributes}>${children.join('')}</${

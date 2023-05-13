@@ -31,6 +31,9 @@ async function main() {
 
             html = await vite.transformIndexHtml(url, html)
 
+            // minify html
+            html = html.replace(/<!--(.*?)-->|\s\B/gm, '')
+
             // replace outlet with app
             const { default: App, router } = mainModule
 
@@ -45,9 +48,6 @@ async function main() {
                     .map((p) => `<link rel="stylesheet" href="${p}">`)
                     .join('\n')
             )
-
-            // minify html
-            html = html.replace(/<!--(.*?)-->|\s\B/gm, '')
 
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
         } catch (e: any) {
