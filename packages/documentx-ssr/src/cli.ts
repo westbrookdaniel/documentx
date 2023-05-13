@@ -14,7 +14,7 @@ const cli = cac('documentx-ssr')
 
 cli.command('dev', 'Start dev server').action(async () => {
     process.env.NODE_ENV = 'dev'
-    await import(path.resolve(__dirname, './index.js'))
+    await import(path.resolve(__dirname, './server-dev.js'))
 })
 
 cli.command('build', 'Build for production').action(async () => {
@@ -31,9 +31,9 @@ cli.command('build', 'Build for production').action(async () => {
     if (stderr) console.error(stderr)
     console.log(stdout)
 
-    // move our index.js to their dist
+    // move our server to their dist
     fs.copyFileSync(
-        path.resolve(__dirname, 'index.js'),
+        path.resolve(__dirname, 'server.js'),
         path.resolve(process.cwd(), 'dist/index.js')
     )
 })

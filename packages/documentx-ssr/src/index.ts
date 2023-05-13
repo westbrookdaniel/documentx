@@ -1,87 +1,50 @@
-import { renderToString } from 'documentx'
-import express from 'express'
-import fs from 'fs'
-import path from 'path'
-import { ViteDevServer, createServer } from 'vite'
+import path from 'node:path'
+import type { Plugin } from 'vite'
 
-import fetch from 'cross-fetch'
-global.fetch = fetch
+const cwd = process.cwd()
 
-const isDev = process.env.NODE_ENV === 'dev'
-
-const __dirname = path.dirname(new URL(import.meta.url).pathname)
-
-async function main() {
-    const app = express()
-
-    let vite: ViteDevServer | undefined
-
-    if (isDev) {
-        vite = await createServer({
-            server: { middlewareMode: true },
-            appType: 'custom',
-        })
-    }
-
-    if (isDev && vite) {
-        app.use(vite.middlewares)
-    } else {
-        app.use(
-            '/assets',
-            express.static(path.resolve(__dirname, './assets'), {
-                index: false,
-            })
-        )
-    }
-
-    const mainModule =
-        isDev && vite
-            ? await vite.ssrLoadModule('/src/main.tsx')
-            : await import(path.resolve(__dirname, './main.js'))
-
-    app.use('*', async (req, res, next) => {
-        const url = req.originalUrl
-
-        try {
-            // send html
-            let html = fs.readFileSync(
-                isDev
-                    ? path.resolve(process.cwd(), 'index.html')
-                    : path.resolve(__dirname, 'index.html'),
-                'utf-8'
-            )
-
-            if (isDev && vite) html = await vite.transformIndexHtml(url, html)
-
-            // replace outlet with app
-            const { default: App, router } = mainModule
-
-            router.history.replace(url)
-
-            const appHtml = await renderToString({ type: App, props: {} })
-            html = html.replace('<!--outlet-->', appHtml.join(''))
-
-            if (isDev) {
-                html = html.replace(
-                    '<!--head-->',
-                    global.documentxssr.css
-                        .map((p) => `<link rel="stylesheet" href="${p}">`)
-                        .join('\n')
-                )
-            }
-
-            // minify html
-            html = html.replace(/<!--(.*?)-->|\s\B/gm, '')
-
-            res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
-        } catch (e: any) {
-            if (isDev && vite) vite.ssrFixStacktrace(e)
-            next(e)
-        }
-    })
-
-    app.listen(3000)
-    console.log('Server running on port 3000')
+declare global {
+    var documentxssr: { css: string[] }
 }
 
-main()
+export function documentxssr(): Plugin[] {
+    global.documentxssr = {
+        css: [],
+    }
+
+    return [
+        {
+            name: 'documentx-ssr-assets',
+            enforce: 'post',
+            apply: 'serve',
+            transform(_code, id, opts) {
+                if (opts?.ssr && id.endsWith('.css')) {
+                    const relativeId = path.relative(cwd, id)
+                    global.documentxssr.css.push('/' + relativeId)
+                }
+            },
+        },
+        {
+            name: 'documentx-ssr-build',
+            enforce: 'pre',
+            apply: 'build',
+            config(config, env) {
+                if (env.command === 'build' && config.build?.ssr) {
+                    return {
+                        ...config,
+                        build: {
+                            ...config.build,
+                            rollupOptions: {
+                                input: {
+                                    main: path.resolve(cwd, 'src/main.tsx'),
+                                },
+                            },
+                            emptyOutDir: false,
+                        },
+                    }
+                }
+                return config
+            },
+        },
+    ]
+}

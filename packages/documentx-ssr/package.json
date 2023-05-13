@@ -27,16 +27,6 @@
             "require": "./dist/index.cjs",
             "types": "./dist/index.d.ts"
         },
-        "./plugin": {
-            "import": "./dist/plugin.js",
-            "require": "./dist/plugin.cjs",
-            "types": "./dist/plugin.d.ts"
-        },
-        "./cli": {
-            "import": "./dist/cli.js",
-            "require": "./dist/cli.cjs",
-            "types": "./dist/cli.d.ts"
-        },
         "./package.json": "./package.json",
         "./dist/*": "./dist/*"
     },
@@ -49,7 +39,11 @@
         "@types/node": "^20.1.3",
         "microbundle": "^0.15.1",
         "tsconfig-documentx": "workspace:*",
-        "typescript": "5.1.0-beta"
+        "typescript": "5.1.0-beta",
+        "cross-fetch": "^3.1.5",
+        "documentx": "workspace:*",
+        "express": "^4.18.2",
+        "vite": "^4.3.2"
     },
     "publishConfig": {
         "access": "public"
@@ -57,10 +51,10 @@
     "peerDependencies": {
         "cross-fetch": "^3.1.5",
         "documentx": "workspace:*",
-        "express": "^4.18.2"
+        "express": "^4.18.2",
+        "vite": "^4.3.2"
     },
     "dependencies": {
-        "cac": "^6.7.14",
-        "vite": "^4.3.2"
+        "cac": "^6.7.14"
     }
 }
