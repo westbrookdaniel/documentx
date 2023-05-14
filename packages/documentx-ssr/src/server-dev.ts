@@ -17,6 +17,8 @@ async function main() {
 
     app.use(vite.middlewares)
 
+    const mainModule = await vite.ssrLoadModule('/src/main.tsx')
+
     app.use('*', async (req, res, next) => {
         const url = req.originalUrl
 
@@ -33,19 +35,14 @@ async function main() {
             html = html.replace(/\s\B/gm, '')
 
             // replace outlet with app
-            const {
-                default: App,
-                router,
-                meta,
-            } = await vite.ssrLoadModule('/src/main.tsx')
+            const { default: App } = mainModule
             if (!App) {
                 throw new Error('No app as the default export of /src/main.tsx')
             }
-            if (!router) {
-                throw new Error('router is not exported from /src/main.tsx')
-            }
-            if (!meta) {
-                throw new Error('meta is not exported from /src/main.tsx')
+            if (!router || !meta) {
+                throw new Error(
+                    'router and meta have not been registered using register()'
+                )
             }
 
             router.history.replace(url)

@@ -1,5 +1,11 @@
 # documentx-ssr
 
+## 3.0.4
+
+### Patch Changes
+
+-   Move back to globals
+
 ## 3.0.3
 
 ### Patch Changes
