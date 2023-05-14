@@ -1,5 +1,11 @@
 # documentx
 
+## 0.8.2
+
+### Patch Changes
+
+-   Fix types import
+
 ## 0.8.1
 
 ### Patch Changes
