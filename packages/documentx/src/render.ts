@@ -67,13 +67,10 @@ function applyAttributes(vnode: JSX.Element, el: HTMLElement) {
     // Apply attributes
     Object.entries(vnode.props).forEach(([key, value]) => {
         if (key === 'children') return
-        // We want to call ref at the end
+        // We want to call ref and dangerouslySetInnerHTML at the end
         if (key === 'ref') return
+        if (key === 'dangerouslySetInnerHTML') return
         if (value === undefined) return
-        if (value === 'dangerouslySetInnerHTML') {
-            el.innerHTML = value.__html as string
-            return
-        }
         if (key === 'style' && typeof value === 'object') {
             Object.entries(value).forEach(([styleKey, styleValue]) => {
                 el.style[styleKey as any] =
@@ -109,4 +106,9 @@ function applyAttributes(vnode: JSX.Element, el: HTMLElement) {
 
     // Call ref
     if (vnode.props.ref) vnode.props.ref(el)
+
+    // Handle dangerouslySetInnerHTML
+    if (vnode.props.dangerouslySetInnerHTML) {
+        el.innerHTML = vnode.props.dangerouslySetInnerHTML.__html
+    }
 }

@@ -47,9 +47,7 @@ export async function renderToString(vnode: JSX.Element): Promise<string[]> {
                 !key.startsWith('on')
         )
         .map(([key, value]) => {
-            if (key === 'dangerouslySetInnerHTML') {
-                return (children = [value.__html as string])
-            }
+            if (key === 'dangerouslySetInnerHTML') return null
             if (key === 'style' && typeof value === 'object') {
                 return `style="${Object.entries(value)
                     .map(([k, styleValue]) => {
@@ -73,6 +71,10 @@ export async function renderToString(vnode: JSX.Element): Promise<string[]> {
         .filter(Boolean)
         .join(' ')
 
+    if (vnode.props.dangerouslySetInnerHTML) {
+        children = [vnode.props.dangerouslySetInnerHTML.__html]
+    }
+
     if (stringAttributes) stringAttributes = ' ' + stringAttributes
 
     if (!children.length && voidElements.includes(vnode.type)) {
@@ -93,7 +95,13 @@ const getNodesFromChildren = async (children: Children) => {
         },
         catch: (child) => {
             if (child === undefined || child === null) return
-            return child.toString()
+            return child
+                .toString()
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
         },
     })
 }
