@@ -1,5 +1,13 @@
 # documentx-ssr
 
+## 2.0.10
+
+### Patch Changes
+
+-   Fixes for ssr
+-   Updated dependencies
+    -   documentx@0.7.6
+
 ## 2.0.9
 
 ### Patch Changes

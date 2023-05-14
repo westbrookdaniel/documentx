@@ -1,6 +1,23 @@
 import type { Children } from './index'
 import { mapTypes } from './mapTypes'
 
+const voidElements = [
+    'area',
+    'base',
+    'br',
+    'col',
+    'embed',
+    'hr',
+    'img',
+    'input',
+    'link',
+    'meta',
+    'param',
+    'source',
+    'track',
+    'wbr',
+]
+
 /**
  * Creates dom string from a node
  */
@@ -58,7 +75,9 @@ export async function renderToString(vnode: JSX.Element): Promise<string[]> {
 
     if (stringAttributes) stringAttributes = ' ' + stringAttributes
 
-    if (!children.length) return [`<${vnode.type}${stringAttributes} />`]
+    if (!children.length && voidElements.includes(vnode.type)) {
+        return [`<${vnode.type}${stringAttributes}>`]
+    }
 
     return [
         `<${vnode.type}${stringAttributes}>${children.join('')}</${

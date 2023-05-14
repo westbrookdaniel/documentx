@@ -1,5 +1,11 @@
 # documentx
 
+## 0.7.6
+
+### Patch Changes
+
+-   Fixes for ssr
+
 ## 0.7.5
 
 ### Patch Changes

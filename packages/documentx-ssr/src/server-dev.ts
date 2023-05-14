@@ -31,8 +31,8 @@ async function main() {
 
             html = await vite.transformIndexHtml(url, html)
 
-            // minify html
-            html = html.replace(/<!--(.*?)-->|\s\B/gm, '')
+            // minify html (keep comments)
+            html = html.replace(/\s\B/gm, '')
 
             // replace outlet with app
             const { default: App, router } = mainModule
