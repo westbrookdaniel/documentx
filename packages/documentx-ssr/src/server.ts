@@ -8,6 +8,8 @@ global.fetch = fetch
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
+const PORT = process.env.PORT || 3000
+
 async function main() {
     const app = express()
 
@@ -66,8 +68,8 @@ async function main() {
         }
     })
 
-    app.listen(3000)
-    console.log('Server running on port 3000')
+    app.listen(PORT)
+    console.log(`Server running on port ${PORT}`)
 }
 
 main()

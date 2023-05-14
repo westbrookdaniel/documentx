@@ -7,6 +7,8 @@ import { createServer } from 'vite'
 import fetch from 'cross-fetch'
 global.fetch = fetch
 
+const PORT = process.env.PORT || 3000
+
 async function main() {
     const app = express()
 
@@ -70,8 +72,8 @@ async function main() {
         }
     })
 
-    app.listen(3000)
-    console.log('Server running on port 3000')
+    app.listen(PORT)
+    console.log(`Server running on port ${PORT}`)
 }
 
 main()
