@@ -1,5 +1,13 @@
 # documentx-ssr
 
+## 3.0.3
+
+### Patch Changes
+
+-   Fix for meta and move to non global
+-   Updated dependencies
+    -   documentx@0.8.3
+
 ## 3.0.2
 
 ### Patch Changes

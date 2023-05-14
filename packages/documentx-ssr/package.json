@@ -1,6 +1,6 @@
 {
     "name": "documentx-ssr",
-    "version": "3.0.2",
+    "version": "3.0.3",
     "type": "module",
     "license": "MIT",
     "author": "Daniel Westbrook",
@@ -26,11 +26,6 @@
             "import": "./dist/index.js",
             "require": "./dist/index.cjs",
             "types": "./dist/index.d.ts"
-        },
-        "./plugin": {
-            "import": "./dist/plugin.js",
-            "require": "./dist/plugin.cjs",
-            "types": "./dist/plugin.d.ts"
         },
         "./package.json": "./package.json",
         "./dist/*": "./dist/*"

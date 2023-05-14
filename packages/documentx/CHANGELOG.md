@@ -1,5 +1,11 @@
 # documentx
 
+## 0.8.3
+
+### Patch Changes
+
+-   Fix for meta and move to non global
+
 ## 0.8.2
 
 ### Patch Changes

@@ -34,12 +34,15 @@ async function main() {
             html = html.replace(/\s\B/gm, '')
 
             // replace outlet with app
-            const { default: App } = mainModule
+            const { default: App, router, meta } = mainModule
             if (!App) {
-                throw new Error('App is not exported from /src/main.tsx')
+                throw new Error('No app as the default export of /src/main.tsx')
             }
-            if (!globalThis.router) {
-                throw new Error('router is not set on globalThis')
+            if (!router) {
+                throw new Error('router is not exported from /src/main.tsx')
+            }
+            if (!meta) {
+                throw new Error('meta is not exported from /src/main.tsx')
             }
 
             router.history.replace(url)
@@ -49,14 +52,12 @@ async function main() {
 
             const head: string[] = []
 
-            if (meta) {
-                const tags: string[] = (
-                    await Promise.all(
-                        meta.current.map((node: any) => renderToString(node))
-                    )
-                ).flat()
-                head.push(...tags)
-            }
+            const tags: string[] = (
+                await Promise.all(
+                    meta.current.map((node: any) => renderToString(node))
+                )
+            ).flat()
+            head.push(...tags)
 
             html = html.replace('<!--head-->', head.join('\n'))
 

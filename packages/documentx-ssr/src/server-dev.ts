@@ -33,12 +33,19 @@ async function main() {
             html = html.replace(/\s\B/gm, '')
 
             // replace outlet with app
-            const { default: App } = await vite.ssrLoadModule('/src/main.tsx')
+            const {
+                default: App,
+                router,
+                meta,
+            } = await vite.ssrLoadModule('/src/main.tsx')
+            if (!App) {
+                throw new Error('No app as the default export of /src/main.tsx')
+            }
             if (!router) {
                 throw new Error('router is not exported from /src/main.tsx')
             }
-            if (!globalThis.router) {
-                throw new Error('router is not set on globalThis')
+            if (!meta) {
+                throw new Error('meta is not exported from /src/main.tsx')
             }
 
             router.history.replace(url)
@@ -50,14 +57,12 @@ async function main() {
                 (p) => `<link rel="stylesheet" href="${p}">`
             )
 
-            if (meta) {
-                const tags: string[] = (
-                    await Promise.all(
-                        meta.current.map((node: any) => renderToString(node))
-                    )
-                ).flat()
-                head.push(...tags)
-            }
+            const tags: string[] = (
+                await Promise.all(
+                    meta.current.map((node: any) => renderToString(node))
+                )
+            ).flat()
+            head.push(...tags)
 
             html = html.replace('<!--head-->', head.join('\n'))
 
