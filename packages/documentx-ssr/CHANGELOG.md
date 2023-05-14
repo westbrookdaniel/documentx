@@ -1,5 +1,12 @@
 # documentx-ssr
 
+## 3.0.7
+
+### Patch Changes
+
+-   Updated dependencies
+    -   documentx@0.8.5
+
 ## 3.0.6
 
 ### Patch Changes

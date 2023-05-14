@@ -1,5 +1,11 @@
 # documentx
 
+## 0.8.5
+
+### Patch Changes
+
+-   Add scroll to top
+
 ## 0.8.4
 
 ### Patch Changes

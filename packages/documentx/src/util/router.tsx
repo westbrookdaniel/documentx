@@ -111,6 +111,7 @@ export const createRouter = (routes: Record<string, Route>): Router => {
                     const children = await render(error(c))
                     getTarget(el).replaceChildren?.(...children)
                 }
+                window.scrollTo(0, 0)
             })
 
             return await router.currentMatch().component()
