@@ -1,5 +1,4 @@
-import type { Meta } from 'documentx/dist/util/Meta'
-import type { Router } from 'documentx/dist/util/router'
+import type { Router, Meta } from 'documentx/util'
 
 declare global {
     var router: Router

@@ -39,7 +39,3 @@ yarn-error.log*
 dist
 
 tsconfig.tsbuildinfo
-
-# where types get built into for documentx
-/packages/documentx/jsx-runtime.d.ts
-/packages/documentx/jsx-dev-runtime.d.ts

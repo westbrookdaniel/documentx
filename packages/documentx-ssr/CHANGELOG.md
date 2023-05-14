@@ -1,5 +1,13 @@
 # documentx-ssr
 
+## 3.0.1
+
+### Patch Changes
+
+-   Fix types
+-   Updated dependencies
+    -   documentx@0.8.1
+
 ## 3.0.0
 
 ### Minor Changes
