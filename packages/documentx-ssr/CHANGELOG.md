@@ -1,5 +1,11 @@
 # documentx-ssr
 
+## 2.0.9
+
+### Patch Changes
+
+-   Fix for cli with no dist
+
 ## 2.0.8
 
 ### Patch Changes

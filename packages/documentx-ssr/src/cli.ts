@@ -20,8 +20,10 @@ cli.command('dev', 'Start dev server').action(async () => {
 cli.command('build', 'Build for production').action(async () => {
     console.log('Building...')
 
-    // clean out dir
-    fs.rmSync(path.resolve(process.cwd(), 'dist'), { recursive: true })
+    // clean out dir if it exists
+    if (fs.existsSync(path.resolve(process.cwd(), 'dist'))) {
+        fs.rmSync(path.resolve(process.cwd(), 'dist'), { recursive: true })
+    }
 
     // type check, build client and server
     const { stderr, stdout } = await exec(
