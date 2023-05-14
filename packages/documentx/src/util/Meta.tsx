@@ -19,26 +19,28 @@ export class Meta {
 
     async set(meta: JSX.Element[]) {
         // Store a representation of what we think the meta tags should be for SSR
-        this.current = this.current.reduce((acc, el) => {
+        this.current = meta.reduce((acc, el) => {
             if (el.type === 'title') {
-                const existing = acc.find((e) => e.type === 'title')
-                if (existing) {
-                    existing.props = el.props
-                    return acc
+                const exist = acc.find((e) => e.type === 'title')
+                if (exist) {
+                    exist.props = el.props
+                } else {
+                    acc.push(el)
                 }
             } else if (el.type === 'meta') {
-                const existing = acc.find(
+                const exist = acc.find(
                     (e) =>
                         e.type === 'meta' &&
                         (e.props as any).name === (el.props as any).name
                 )
-                if (existing) {
-                    existing.props = el.props
-                    return acc
+                if (exist) {
+                    exist.props = el.props
+                } else {
+                    acc.push(el)
                 }
             }
-            return [...acc, el]
-        }, meta)
+            return acc
+        }, this.current)
 
         if (typeof document === 'undefined') {
             // Don't do anything else on the server

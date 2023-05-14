@@ -17,8 +17,6 @@ async function main() {
 
     app.use(vite.middlewares)
 
-    const mainModule = await vite.ssrLoadModule('/src/main.tsx')
-
     app.use('*', async (req, res, next) => {
         const url = req.originalUrl
 
@@ -35,7 +33,7 @@ async function main() {
             html = html.replace(/\s\B/gm, '')
 
             // replace outlet with app
-            const { default: App } = mainModule
+            const { default: App } = await vite.ssrLoadModule('/src/main.tsx')
             if (!router) {
                 throw new Error('router is not exported from /src/main.tsx')
             }
