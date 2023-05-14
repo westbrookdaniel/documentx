@@ -1,5 +1,11 @@
 # documentx-ssr
 
+## 2.0.8
+
+### Patch Changes
+
+-   Fix for prod
+
 ## 2.0.7
 
 ### Patch Changes

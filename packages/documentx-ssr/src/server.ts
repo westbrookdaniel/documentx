@@ -12,9 +12,9 @@ async function main() {
     const app = express()
 
     app.use(
-        '/assets',
-        express.static(path.resolve(__dirname, './assets'), {
+        express.static(path.resolve(__dirname, '.'), {
             index: false,
+            redirect: false,
         })
     )
 
@@ -29,6 +29,8 @@ async function main() {
                 path.resolve(__dirname, 'index.html'),
                 'utf-8'
             )
+
+            html = html.replace('<!--head-->', '')
 
             // minify html
             html = html.replace(/<!--(.*?)-->|\s\B/gm, '')
