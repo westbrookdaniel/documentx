@@ -1,5 +1,11 @@
 # documentx
 
+## 0.8.4
+
+### Patch Changes
+
+-   Fix html render
+
 ## 0.8.3
 
 ### Patch Changes
