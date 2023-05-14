@@ -6,7 +6,7 @@ export { render } from './render'
 export { renderToString } from './renderToString'
 
 export type VNode<P = {}> = {
-    type: string | ComponentType<P>
+    type?: string | ComponentType<P>
     props: P & documentxDOMAttributes
 }
 

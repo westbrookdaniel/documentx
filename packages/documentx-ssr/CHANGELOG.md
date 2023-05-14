@@ -1,5 +1,16 @@
 # documentx-ssr
 
+## 3.0.0
+
+### Minor Changes
+
+-   Change to globals
+
+### Patch Changes
+
+-   Updated dependencies
+    -   documentx@0.8.0
+
 ## 2.0.10
 
 ### Patch Changes

@@ -30,18 +30,35 @@ async function main() {
                 'utf-8'
             )
 
-            html = html.replace('<!--head-->', '')
-
             // minify html (keep comments)
             html = html.replace(/\s\B/gm, '')
 
             // replace outlet with app
-            const { default: App, router } = mainModule
+            const { default: App } = mainModule
+            if (!App) {
+                throw new Error('App is not exported from /src/main.tsx')
+            }
+            if (!globalThis.router) {
+                throw new Error('router is not set on globalThis')
+            }
 
             router.history.replace(url)
 
             const appHtml = await renderToString({ type: App, props: {} })
             html = html.replace('<!--outlet-->', appHtml.join(''))
+
+            const head: string[] = []
+
+            if (meta) {
+                const tags: string[] = (
+                    await Promise.all(
+                        meta.current.map((node: any) => renderToString(node))
+                    )
+                ).flat()
+                head.push(...tags)
+            }
+
+            html = html.replace('<!--head-->', head.join('\n'))
 
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
         } catch (e: any) {

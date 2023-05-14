@@ -1,5 +1,11 @@
 # documentx
 
+## 0.8.0
+
+### Minor Changes
+
+-   Change to globals
+
 ## 0.7.6
 
 ### Patch Changes

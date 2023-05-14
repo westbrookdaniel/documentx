@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import cac from 'cac'
 import fs from 'fs'
 import path from 'path'
