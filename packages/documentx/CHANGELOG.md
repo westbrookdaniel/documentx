@@ -1,5 +1,11 @@
 # documentx
 
+## 0.8.6
+
+### Patch Changes
+
+-   Change build and packs
+
 ## 0.8.5
 
 ### Patch Changes

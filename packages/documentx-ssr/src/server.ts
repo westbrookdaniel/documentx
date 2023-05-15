@@ -2,6 +2,8 @@ import { renderToString } from 'documentx'
 import express from 'express'
 import fs from 'fs'
 import path from 'path'
+import cors from 'cors'
+import compression from 'compression'
 
 import fetch from 'cross-fetch'
 global.fetch = fetch
@@ -12,6 +14,9 @@ const PORT = process.env.PORT || 3000
 
 async function main() {
     const app = express()
+
+    app.use(cors())
+    app.use(compression())
 
     app.use(
         express.static(path.resolve(__dirname, '.'), {

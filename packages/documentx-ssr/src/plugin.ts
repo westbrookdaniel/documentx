@@ -33,6 +33,7 @@ export function documentxssr(): Plugin[] {
                     return {
                         ...config,
                         build: {
+                            target: 'esnext',
                             ...config.build,
                             rollupOptions: {
                                 input: {
