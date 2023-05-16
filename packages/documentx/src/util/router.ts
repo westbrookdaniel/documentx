@@ -9,11 +9,13 @@ export type Route = () => JSX.Element | Promise<JSX.Element>
 export type Router = {
     history: History
     currentMatch: () => {
-        component: Route
+        preload: () => Promise<void>
+        component: () => Promise<Route>
         params: () => Record<string, string>
     }
     match: (path: string) => {
-        component: Route
+        preload: () => Promise<void>
+        component: () => Promise<Route>
         params: () => Record<string, string>
     }
     params: () => Record<string, string>
@@ -35,13 +37,15 @@ export type Router = {
  *
  * @example
  * const router = createRouter({
- *  '/': () => <h1>Home</h1>,
- *  '/about': () => <h1>About</h1>,
- *  '/users/:id': () => <h1>User {router.params().id}</h1>,
- *  '404': () => <h1>Not Found</h1>,
+ *  '/': () => () => <h1>Home</h1>,
+ *  '/about': () => () => <h1>About</h1>,
+ *  '/users/:id': () => () => <h1>User {router.params().id}</h1>,
+ *  '404': () => () => <h1>Not Found</h1>,
  * })
  */
-export const createRouter = (routes: Record<string, Route>): Router => {
+export const createRouter = (
+    routes: Record<string, () => Promise<Route>>
+): Router => {
     let history: History
 
     if (typeof document === 'undefined') {
@@ -71,6 +75,11 @@ export const createRouter = (routes: Record<string, Route>): Router => {
                 })
             })
             return {
+                preload: async () => {
+                    // Currently only preloads the module,
+                    // but we could do data loading here too
+                    await routes[foundRoute || '404']()
+                },
                 component: routes[foundRoute || '404'],
                 params: () => {
                     const routeParts = foundRoute!.split('/')
@@ -104,7 +113,8 @@ export const createRouter = (routes: Record<string, Route>): Router => {
                 if (typeof document === 'undefined') return
                 const route = router.currentMatch()
                 try {
-                    const children = await render(await route.component())
+                    const comp = await route.component()
+                    const children = await render(await comp())
                     getTarget(el).replaceChildren?.(...children)
                 } catch (c) {
                     const children = await render(error(c))
@@ -113,7 +123,8 @@ export const createRouter = (routes: Record<string, Route>): Router => {
                 window.scrollTo(0, 0)
             })
 
-            return await router.currentMatch().component()
+            const route = await router.currentMatch().component()
+            return await route()
         },
     }
 
@@ -125,5 +136,8 @@ export const createRouter = (routes: Record<string, Route>): Router => {
 }
 
 export const lazy = (routeImport: () => Promise<{ default: Route }>) => {
-    return async () => (await routeImport()).default()
+    return async () => {
+        const mod = await routeImport()
+        return () => mod.default()
+    }
 }

@@ -2,8 +2,21 @@
 // Ensure things work in SSR
 /// <reference lib="dom" />
 
+import type { Meta, Router } from './util'
 export { render } from './render'
 export { renderToString } from './renderToString'
+
+declare global {
+    var router: Router
+    var meta: Meta
+
+    var documentxssr: { css: string[] }
+}
+
+export function register({ router, meta }: { router: Router; meta: Meta }) {
+    globalThis.router = router
+    globalThis.meta = meta
+}
 
 export type VNode<P = {}> = {
     type?: string | ComponentType<P>

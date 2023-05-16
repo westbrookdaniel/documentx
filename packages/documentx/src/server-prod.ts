@@ -1,4 +1,4 @@
-import { renderToString } from 'documentx'
+import { renderToString } from './renderToString'
 import express from 'express'
 import fs from 'fs'
 import path from 'path'

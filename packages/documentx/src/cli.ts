@@ -33,7 +33,7 @@ cli.command('build', 'Build for production').action(async () => {
 
     // move our server to their dist
     fs.copyFileSync(
-        path.resolve(__dirname, 'server.js'),
+        path.resolve(__dirname, 'server-prod.js'),
         path.resolve(process.cwd(), 'dist/index.js')
     )
 })

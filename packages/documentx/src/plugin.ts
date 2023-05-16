@@ -3,10 +3,6 @@ import type { Plugin } from 'vite'
 
 const cwd = process.cwd()
 
-declare global {
-    var documentxssr: { css: string[] }
-}
-
 export function documentxssr(): Plugin[] {
     global.documentxssr = {
         css: [],

@@ -7,7 +7,7 @@ import { Route, lazy } from './router'
 export function fileRouter(
     moduleMap: Record<string, () => Promise<unknown>>,
     root: string
-): Record<string, Route> {
+): Record<string, () => Promise<Route>> {
     const files = moduleMap as Record<string, () => Promise<{ default: Route }>>
 
     return Object.fromEntries(

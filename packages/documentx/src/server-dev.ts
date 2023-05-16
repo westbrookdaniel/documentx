@@ -1,4 +1,4 @@
-import { renderToString } from 'documentx'
+import { renderToString } from './renderToString'
 import express from 'express'
 import fs from 'fs'
 import path from 'path'
@@ -52,7 +52,7 @@ async function main() {
             const appHtml = await renderToString({ type: App, props: {} })
             html = html.replace('<!--outlet-->', appHtml.join(''))
 
-            const head = global.documentxssr.css.map(
+            const head = globalThis.documentxssr.css.map(
                 (p) => `<link rel="stylesheet" href="${p}">`
             )
 
