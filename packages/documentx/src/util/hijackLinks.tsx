@@ -1,8 +1,8 @@
-import { BrowserHistory } from 'history'
+import { Router } from './router'
 
-export function hijackLinks(history: BrowserHistory) {
+export function hijackLinks(router: Router) {
     // Hijack all links
-    document.querySelectorAll('a').forEach((el) => hijackLink(history, el))
+    document.querySelectorAll('a').forEach((el) => hijackLink(router, el))
 
     // Watch for changes to the dom and hijack new or changed links
     const observer = new MutationObserver((mutations) => {
@@ -12,9 +12,9 @@ export function hijackLinks(history: BrowserHistory) {
                     mutation.addedNodes.forEach((el) => {
                         if (el instanceof HTMLElement) {
                             if (el instanceof HTMLAnchorElement)
-                                hijackLink(history, el)
+                                hijackLink(router, el)
                             el.querySelectorAll('a').forEach((el) =>
-                                hijackLink(history, el)
+                                hijackLink(router, el)
                             )
                         }
                     })
@@ -23,9 +23,9 @@ export function hijackLinks(history: BrowserHistory) {
                     const el = mutation.target
                     if (el instanceof HTMLElement) {
                         if (el instanceof HTMLAnchorElement)
-                            hijackLink(history, el)
+                            hijackLink(router, el)
                         el.querySelectorAll('a').forEach((el) =>
-                            hijackLink(history, el)
+                            hijackLink(router, el)
                         )
                     }
                 }
@@ -39,7 +39,7 @@ export function hijackLinks(history: BrowserHistory) {
         attributes: true,
     })
 
-    return history
+    return router
 }
 
 /**
@@ -50,7 +50,7 @@ const existingRouterListeners = new WeakMap<
     [string, EventListenerOrEventListenerObject]
 >()
 
-const hijackLink = (history: BrowserHistory, el: HTMLAnchorElement) => {
+const hijackLink = (router: Router, el: HTMLAnchorElement) => {
     // Remove old listener
     // We remove it here in case the target changes, or it changes to an external link
     if (existingRouterListeners.has(el)) {
@@ -60,12 +60,15 @@ const hijackLink = (history: BrowserHistory, el: HTMLAnchorElement) => {
         existingRouterListeners.delete(el)
     }
 
-    // If same origin and internal
-    el.addEventListener('click', (e) => {
+    const click = (e: Event) => {
         const href = el.getAttribute('href')!
         if (!el.target && href?.startsWith('/')) {
             e.preventDefault()
-            history.push(href)
+            router.history.push(href)
         }
-    })
+    }
+    el.addEventListener('click', click)
+
+    // Add to map
+    existingRouterListeners.set(el, ['click', click])
 }

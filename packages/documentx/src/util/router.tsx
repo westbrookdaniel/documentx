@@ -48,7 +48,6 @@ export const createRouter = (routes: Record<string, Route>): Router => {
         history = createMemoryHistory()
     } else {
         history = createBrowserHistory()
-        hijackLinks(history)
     }
 
     const router: Router = {
@@ -116,6 +115,10 @@ export const createRouter = (routes: Record<string, Route>): Router => {
 
             return await router.currentMatch().component()
         },
+    }
+
+    if (typeof document !== 'undefined') {
+        hijackLinks(router)
     }
 
     return router
