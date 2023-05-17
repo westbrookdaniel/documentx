@@ -5,11 +5,16 @@
 import type { Meta, Router } from './util'
 export { render } from './render'
 export { renderToString } from './renderToString'
+import type { Request, Response, NextFunction } from 'express'
 
 declare global {
     var router: Router
     var meta: Meta
+    var req: Request
+    var res: Response
+    var next: NextFunction
 
+    // Annoyingly necessary for SSR, could we use meta instead?
     var documentxssr: { css: string[] }
 }
 

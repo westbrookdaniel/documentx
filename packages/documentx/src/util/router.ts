@@ -9,11 +9,13 @@ export type Route = () => JSX.Element | Promise<JSX.Element>
 export type Router = {
     history: History
     currentMatch: () => {
+        route: string | undefined
         preload: () => Promise<void>
         component: () => Promise<Route>
         params: () => Record<string, string>
     }
     match: (path: string) => {
+        route: string | undefined
         preload: () => Promise<void>
         component: () => Promise<Route>
         params: () => Record<string, string>
@@ -75,6 +77,7 @@ export const createRouter = (
                 })
             })
             return {
+                route: foundRoute,
                 preload: async () => {
                     // Currently only preloads the module,
                     // but we could do data loading here too

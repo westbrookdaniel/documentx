@@ -1,5 +1,6 @@
 import { renderToString } from './renderToString'
 import express from 'express'
+import cookies from 'cookie-parser'
 import fs from 'fs'
 import path from 'path'
 import cors from 'cors'
@@ -17,6 +18,7 @@ async function main() {
 
     app.use(cors())
     app.use(compression())
+    app.use(cookies())
 
     app.use(
         express.static(path.resolve(__dirname, '.'), {
@@ -51,7 +53,12 @@ async function main() {
                 )
             }
 
+            // Setup for rendering
+            globalThis.req = req
+            globalThis.res = res
+            globalThis.next = next
             router.history.replace(url)
+            meta.current = []
 
             const appHtml = await renderToString({ type: App, props: {} })
             html = html.replace('<!--outlet-->', appHtml.join(''))

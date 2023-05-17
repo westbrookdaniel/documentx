@@ -38,6 +38,8 @@ export class Meta {
                 } else {
                     acc.push(el)
                 }
+            } else {
+                acc.push(el)
             }
             return acc
         }, this.current)

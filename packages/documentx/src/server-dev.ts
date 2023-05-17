@@ -1,5 +1,6 @@
 import { renderToString } from './renderToString'
 import express from 'express'
+import cookies from 'cookie-parser'
 import fs from 'fs'
 import path from 'path'
 import { createServer } from 'vite'
@@ -18,6 +19,7 @@ async function main() {
     })
 
     app.use(vite.middlewares)
+    app.use(cookies())
 
     const mainModule = await vite.ssrLoadModule('/src/main.tsx')
 
@@ -47,7 +49,12 @@ async function main() {
                 )
             }
 
+            // Setup for rendering
+            globalThis.req = req
+            globalThis.res = res
+            globalThis.next = next
             router.history.replace(url)
+            meta.current = []
 
             const appHtml = await renderToString({ type: App, props: {} })
             html = html.replace('<!--outlet-->', appHtml.join(''))
