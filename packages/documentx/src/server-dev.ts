@@ -21,8 +21,6 @@ async function main() {
     app.use(vite.middlewares)
     app.use(cookies())
 
-    const mainModule = await vite.ssrLoadModule('/src/main.tsx')
-
     app.use('*', async (req, res, next) => {
         const url = req.originalUrl
 
@@ -39,6 +37,7 @@ async function main() {
             html = html.replace(/\s\B/gm, '')
 
             // replace outlet with app
+            const mainModule = await vite.ssrLoadModule('/src/main.tsx')
             const { default: App } = mainModule
             if (!App) {
                 throw new Error('No app as the default export of /src/main.tsx')

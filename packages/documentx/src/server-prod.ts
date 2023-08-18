@@ -28,25 +28,18 @@ async function main() {
     )
 
     const mainModule = await import(path.resolve(__dirname, './main.js'))
+    const { default: App } = mainModule
+    if (!App) throw new Error('No app as the default export of /src/main.tsx')
+
+    // send html
+    let html = fs
+        .readFileSync(path.resolve(process.cwd(), 'index.html'), 'utf-8')
+        .replace(/\s\B/gm, '')
 
     app.use('*', async (req, res, next) => {
         const url = req.originalUrl
 
         try {
-            // send html
-            let html = fs.readFileSync(
-                path.resolve(__dirname, 'index.html'),
-                'utf-8'
-            )
-
-            // minify html (keep comments)
-            html = html.replace(/\s\B/gm, '')
-
-            // replace outlet with app
-            const { default: App } = mainModule
-            if (!App) {
-                throw new Error('No app as the default export of /src/main.tsx')
-            }
             if (!router || !meta) {
                 throw new Error(
                     'router and meta have not been registered using register()'
@@ -60,6 +53,7 @@ async function main() {
             router.history.replace(url)
             meta.current = []
 
+            // render and replace outlet with app
             const appHtml = await renderToString({ type: App, props: {} })
             html = html.replace('<!--outlet-->', appHtml.join(''))
 
