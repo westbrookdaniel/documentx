@@ -1,85 +1,59 @@
+import { createApp, eventHandler, toNodeListener } from 'h3'
+import { listen } from 'listhen'
+import { globSync } from 'glob'
 import { renderToString } from './renderToString'
-// import express from 'express'
-// import cookies from 'cookie-parser'
-// import fs from 'fs'
-// import path from 'path'
-// import { createServer } from 'vite'
+import path from 'path'
+import fs from 'fs'
+import * as esbuild from 'esbuild'
 
-// import fetch from 'cross-fetch'
-// global.fetch = fetch
+async function main() {
+    const app = createApp()
 
-// const PORT = process.env.PORT || 3000
+    const files = globSync('./src/pages/**/page.{ts,tsx,js,jsx}')
 
-// async function main() {
-//     const app = express()
+    // If no .documentx folder exists, create it
+    if (!fs.existsSync(path.join(process.cwd(), '.documentx'))) {
+        fs.mkdirSync(path.join(process.cwd(), '.documentx'))
+    }
 
-//     const vite = await createServer({
-//         server: { middlewareMode: true },
-//         appType: 'custom',
-//     })
+    await esbuild.build({
+        entryPoints: files.map((file) => path.join(process.cwd(), file)),
+        bundle: true,
+        platform: 'neutral',
+        jsx: 'automatic',
+        jsxImportSource: 'documentx',
+        jsxFactory: '',
+        outdir: '.documentx/build',
+    })
 
-//     app.use(vite.middlewares)
-//     app.use(cookies())
+    await Promise.all(
+        files.map(async (file) => {
+            const route = file
+                .replace('src/pages', '')
+                .replace(new RegExp('\\page.(ts|tsx|js|jsx)$'), '')
 
-//     app.use('*', async (req, res, next) => {
-//         const url = req.originalUrl
+            const builtFile = file.replace(
+                new RegExp('\\page.(ts|tsx|js|jsx)$'),
+                'page.js'
+            )
 
-//         try {
-//             // send html
-//             let html = fs.readFileSync(
-//                 path.resolve(process.cwd(), 'index.html'),
-//                 'utf-8'
-//             )
+            const { default: Page } = await import(
+                path.join(process.cwd(), '.documentx/build', builtFile)
+            )
 
-//             html = await vite.transformIndexHtml(url, html)
+            if (!Page) throw new Error('No default export found')
 
-//             // minify html (keep comments)
-//             html = html.replace(/\s\B/gm, '')
+            app.use(
+                route,
+                eventHandler((event) => {
+                    if (event.method !== 'GET') return
+                    event.headers.set('Content-Type', 'text/html')
+                    return renderToString({ type: Page, props: {} })
+                })
+            )
+        })
+    )
 
-//             // replace outlet with app
-//             const mainModule = await vite.ssrLoadModule('/src/main.tsx')
-//             const { default: App } = mainModule
-//             if (!App) {
-//                 throw new Error('No app as the default export of /src/main.tsx')
-//             }
-//             if (!router || !meta) {
-//                 throw new Error(
-//                     'router and meta have not been registered using register()'
-//                 )
-//             }
-
-//             // Setup for rendering
-//             globalThis.req = req
-//             globalThis.res = res
-//             globalThis.next = next
-//             router.history.replace(url)
-//             meta.current = []
-
-//             const appHtml = await renderToString({ type: App, props: {} })
-//             html = html.replace('<!--outlet-->', appHtml.join(''))
-
-//             const head = globalThis.documentxssr.css.map(
-//                 (p) => `<link rel="stylesheet" href="${p}">`
-//             )
-
-//             const tags: string[] = (
-//                 await Promise.all(
-//                     meta.current.map((node: any) => renderToString(node))
-//                 )
-//             ).flat()
-//             head.push(...tags)
-
-//             html = html.replace('<!--head-->', head.join('\n'))
-
-//             res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
-//         } catch (e: any) {
-//             vite.ssrFixStacktrace(e)
-//             next(e)
-//         }
-//     })
-
-//     app.listen(PORT)
-//     console.log(`Server running on port ${PORT}`)
-// }
-
-// main()
+    listen(toNodeListener(app))
+}
+main()
