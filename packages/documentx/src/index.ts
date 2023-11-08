@@ -2,26 +2,9 @@
 // Ensure things work in SSR
 /// <reference lib="dom" />
 
-import type { Meta, Router } from './util'
 export { render } from './render'
 export { renderToString } from './renderToString'
-import type { Request, Response, NextFunction } from 'express'
-
-declare global {
-    var router: Router
-    var meta: Meta
-    var req: Request
-    var res: Response
-    var next: NextFunction
-
-    // Annoyingly necessary for SSR, could we use meta instead?
-    var documentxssr: { css: string[] }
-}
-
-export function register({ router, meta }: { router: Router; meta: Meta }) {
-    globalThis.router = router
-    globalThis.meta = meta
-}
+export * from './util'
 
 export type VNode<P = {}> = {
     type?: string | ComponentType<P>
@@ -358,7 +341,7 @@ declare global {
 
         export type TargetedEvent<
             Target extends EventTarget = EventTarget,
-            TypedEvent extends Event = Event
+            TypedEvent extends Event = Event,
         > = Omit<TypedEvent, 'currentTarget'> & {
             readonly currentTarget: Target
         }
@@ -956,7 +939,7 @@ declare global {
             | 'none presentation'
 
         export interface HTMLAttributes<
-            RefType extends EventTarget = EventTarget
+            RefType extends EventTarget = EventTarget,
         > extends DOMAttributes<RefType>,
                 AriaAttributes {
             // Standard HTML Attributes
@@ -1165,7 +1148,7 @@ declare global {
 
         export type DetailedHTMLProps<
             HA extends HTMLAttributes<RefType>,
-            RefType extends EventTarget = EventTarget
+            RefType extends EventTarget = EventTarget,
         > = HA
 
         export interface HTMLMarqueeElement extends HTMLElement {

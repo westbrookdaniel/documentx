@@ -1,4 +1,5 @@
 /// <reference lib="dom" />
+/// <reference lib="dom.iterable" />
 
 import type { Children } from './index'
 import { mapTypes } from './mapTypes'

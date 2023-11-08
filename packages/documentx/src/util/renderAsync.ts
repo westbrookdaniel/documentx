@@ -1,6 +1,6 @@
 import { render } from '../render'
 import { Reference } from './ref'
-import { getTarget } from './getTarget'
+import { getClientTarget } from './getClientTarget'
 
 /**
  * Utility for handling async rendering
@@ -17,11 +17,11 @@ export const renderAsync = (
         .data()
         .then((d) => render(d))
         .then((children) => {
-            getTarget(el).replaceChildren?.(...children)
+            getClientTarget(el).replaceChildren?.(...children)
         })
         .catch(async (err) => {
             const children = await render(options.error(err))
-            getTarget(el)?.replaceChildren?.(...children)
+            getClientTarget(el)?.replaceChildren?.(...children)
         })
     return options.loading()
 }

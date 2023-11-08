@@ -1,3 +1,6 @@
+/**
+ * Only render on the client
+ */
 export const RenderClient = ({
     children,
     fallback,
@@ -5,7 +8,7 @@ export const RenderClient = ({
     children: JSX.Element
     fallback: JSX.Element
 }) => {
-    if (typeof document === 'undefined') {
+    if (typeof window === 'undefined') {
         return fallback
     }
     return children

@@ -8,7 +8,7 @@ const exec = util.promisify(_exec)
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname)
 
-const cli = cac('documentx-ssr')
+const cli = cac('documentx')
 
 cli.command('dev', 'Start dev server').action(async () => {
     process.env.NODE_ENV = 'dev'
