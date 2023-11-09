@@ -1,5 +1,11 @@
 # documentx
 
+## 0.11.0
+
+### Minor Changes
+
+-   Remove server
+
 ## 0.10.0
 
 ### Minor Changes
