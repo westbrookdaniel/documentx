@@ -15,9 +15,6 @@
     ],
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
-    "bin": {
-        "documentx": "./dist/cli.js"
-    },
     "exports": {
         ".": {
             "import": "./dist/index.js",
@@ -36,9 +33,7 @@
     },
     "homepage": "https://github.com/westbrookdaniel/documentx#readme",
     "scripts": {
-        "build": "rm -rf dist && pnpm build:package && pnpm build:cli && chmod +x ./dist/cli.js",
-        "build:package": "microbundle -f modern src/jsx-runtime.ts src/jsx-dev-runtime.ts src/index.ts src/server-dev.ts src/server-prod.ts",
-        "build:cli": "microbundle --target node -f modern src/cli.ts -o dist/cli.js"
+        "build": "microbundle -f modern src/jsx-runtime.ts src/jsx-dev-runtime.ts src/index.ts -o dist/index.js"
     },
     "devDependencies": {
         "@types/node": "^20.1.3",
@@ -55,6 +50,8 @@
         "esbuild": "^0.19.5",
         "glob": "^10.3.10",
         "h3": "^1.8.2",
-        "listhen": "^1.5.5"
+        "linkedom": "^0.16.1",
+        "listhen": "^1.5.5",
+        "vite": "^4.5.0"
     }
 }
